@@ -28,6 +28,9 @@ class MaquinaTuring:
                 self.apuntador -= 1
 
             self.estado_actual = siguiente[0]
+            return True
+        else:
+            return False
 
     def es_final(self):
         if self.estado_actual in self.finales:
@@ -47,11 +50,14 @@ transiciones = {
             ("q3", "Y"): ("q3", "1", "R")
             }
 
-maquina = MaquinaTuring("q0", "q3", "11111", transiciones)
+maquina = MaquinaTuring("q0", "q3", "10", transiciones)
 while not maquina.es_final():
-    print('Cadena:{}'.format(''.join(maquina.cinta)))
-    print('Estado: {}, apuntador: {}'.format(maquina.estado_actual, maquina.apuntador+1))
-    maquina.consumir()
+    print('Cadena: {}'.format(''.join(maquina.cinta)))
+    print('Estado actual: {}, apuntador: {}'.format(maquina.estado_actual, maquina.apuntador+1))
+    if not maquina.consumir():
+        print('*' * 20)
+        break
     print('Siguiente estado: {}'.format(maquina.estado_actual))
     print('*'*20)
-print('Cadena:{}'.format(''.join(maquina.cinta)))
+
+print('Cadena final: {}'.format(''.join(maquina.cinta)))
