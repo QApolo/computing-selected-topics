@@ -8,6 +8,7 @@ class MaquinaTuring:
         self.estado_actual = self.inicial
         self.apuntador = 0
         self.blanco = "B"
+        self.direccion = None
 
     def consumir(self):
         if len(self.cinta) - 1 < self.apuntador:
@@ -17,7 +18,7 @@ class MaquinaTuring:
         tupla = (self.estado_actual, caracter)
         if tupla in self.transiciones:
             siguiente = self.transiciones[tupla]
-            if len(self.cinta) - 1< self.apuntador:
+            if len(self.cinta) - 1 < self.apuntador:
                 self.cinta.append(self.blanco)
             if self.apuntador < 0:
                 self.cinta.insert(0, self.blanco)
@@ -28,6 +29,7 @@ class MaquinaTuring:
                 self.apuntador -= 1
 
             self.estado_actual = siguiente[0]
+            self.direccion = siguiente[2]
             return True
         else:
             return False
@@ -37,27 +39,3 @@ class MaquinaTuring:
             if len(self.cinta) - 1 < self.apuntador or self.apuntador < 0:
                 return True
         return False
-
-transiciones = {
-            ("q0", "1"): ("q1", "X", "R"),
-            ("q0", "Y"): ("q3", "1", "R"),
-            ("q1", "1"): ("q1", "1", "R"),
-            ("q1", "Y"): ("q1", "Y", "R"),
-            ("q1", "B"): ("q2", "Y", "L"),
-            ("q2", "1"): ("q2", "1", "L"),
-            ("q2", "X"): ("q0", "1", "R"),
-            ("q2", "Y"): ("q2", "Y", "L"),
-            ("q3", "Y"): ("q3", "1", "R")
-            }
-
-maquina = MaquinaTuring("q0", "q3", "10", transiciones)
-while not maquina.es_final():
-    print('Cadena: {}'.format(''.join(maquina.cinta)))
-    print('Estado actual: {}, apuntador: {}'.format(maquina.estado_actual, maquina.apuntador+1))
-    if not maquina.consumir():
-        print('*' * 20)
-        break
-    print('Siguiente estado: {}'.format(maquina.estado_actual))
-    print('*'*20)
-
-print('Cadena final: {}'.format(''.join(maquina.cinta)))
