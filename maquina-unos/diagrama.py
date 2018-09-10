@@ -35,16 +35,28 @@ texto = c.create_text(165, 200, text=''.join(maquina.cinta), font=bold_font,
 estado = c.create_text(160, 125, text=maquina.estado_actual, font=bold_font,
                        anchor=tk.W)
 
+archivo = open("salida.txt", "w+")
 # Mientras no llegues a un estado final continua
 while not maquina.es_final():
     print('Cadena: {}'.format(''.join(maquina.cinta)))
     print('Estado actual: {}, apuntador: {}'.format(maquina.estado_actual,
           maquina.apuntador+1))
+
+    archivo.write('Cadena: {}\n'.format(''.join(maquina.cinta)))
+    archivo.write('Estado actual: {}, apuntador: {}\n'
+                  .format(maquina.estado_actual, maquina.apuntador+1))
     if not maquina.consumir():
         print('*' * 20)
+        archivo.write('*' * 20)
+        archivo.write('\n')
         break
     print('Siguiente estado: {}'.format(maquina.estado_actual))
     print('*'*20)
+
+    archivo.write('Siguiente estado: {}\n'.format(maquina.estado_actual))
+    archivo.write('*' * 20)
+    archivo.write('\n')
+
     gui.update()
     time.sleep(1)
     c.itemconfigure(texto, text=''.join(maquina.cinta), anchor=tk.W)
@@ -59,4 +71,6 @@ while not maquina.es_final():
         c.move(flecha, -19, 0)
 
 print('Cadena final: {}'.format(''.join(maquina.cinta)))
+archivo.write('Cadena final: {}\n'.format(''.join(maquina.cinta)))
+archivo.close()
 gui.mainloop()
