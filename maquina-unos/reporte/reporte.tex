@@ -5,6 +5,8 @@
 \usepackage{float}
 \usepackage{listings}
 \usepackage{color}
+\usepackage[spanish]{babel}
+\usepackage[nottoc,notlot,notlof]{tocbibind} % Hace que se agregen las referencias al indice
  
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -208,6 +210,68 @@ gui.mainloop()
 \end{lstlisting}
 
 \section{Pruebas}
+El siguiente ejemplo es la cadena con un solo uno.
 
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=13cm, height=8cm]{uno_consola.png}
+ \caption{Salida en consola}
+ \label{fig:uno_consola}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=13cm, height=8cm]{uno_historial.png}
+ \caption{Registro de transiciones}
+ \label{fig:uno_historial}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=13cm, height=6cm]{uno_grafica.png}
+ \caption{Representación gráfica de las transiciones de la maquina de Turing}
+ \label{fig:uno_grafica}
+\end{center}
+\end{figure}
+
+En este ejemplo se inserta una cadena con dos unos.
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=13cm, height=20cm]{dos_consola.png}
+ \caption{Salida en consola parte uno}
+ \label{fig:dos_consola}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=13cm, height=7cm]{dos_console.png}
+ \caption{Salida en consola parte dos}
+ \label{fig:dos_console}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=13cm, height=20cm]{dos_historial.png}
+ \caption{Registro de transiciones}
+ \label{fig:dos_historial}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=13cm, height=6cm]{dos_grafica.png}
+ \caption{Representación gráfica de las transiciones de la maquina de Turing}
+ \label{fig:dos_grafica}
+\end{center}
+\end{figure}
+
+\nocite{LIBRO}
+
+\bibliographystyle{ieeetr}
+\bibliography{reporte}
 
 \end{document}
