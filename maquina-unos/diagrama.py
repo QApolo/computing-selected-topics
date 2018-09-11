@@ -13,7 +13,7 @@ transiciones = {
             ("q2", "1"): ("q2", "1", "L"),
             ("q2", "X"): ("q0", "1", "R"),
             ("q2", "Y"): ("q2", "Y", "L"),
-            ("q3", "Y"): ("q3", "1", "R")
+            ("q3", "Y"): ("q3", "1", "R"),
             }
 
 entrada = input("Ingrese la cadena de unos: ")
@@ -21,9 +21,9 @@ maquina = MaquinaTuring("q0", "q3", entrada, transiciones)
 
 # Configuracion de la ventana
 gui = tk.Tk()
-gui.geometry("800x400")
+gui.geometry("600x400+100+100")
 gui.title("Maquina de Turing")
-c = tk.Canvas(gui, width=800, height=400)
+c = tk.Canvas(gui, width=600, height=400)
 c.pack()
 bold_font = tkfont.Font(family="Arial", size=24)
 

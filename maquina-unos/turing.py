@@ -11,6 +11,8 @@ class MaquinaTuring:
         self.direccion = None
 
     def consumir(self):
+        """Toma un simbolo de la cinta y lo evalua en la funcion de
+        transicion"""
         if len(self.cinta) - 1 < self.apuntador:
             caracter = 'B'
         else:
@@ -35,6 +37,7 @@ class MaquinaTuring:
             return False
 
     def es_final(self):
+        """Metodo para comprobar si nos encontramos en un estado final"""
         if self.estado_actual in self.finales:
             if len(self.cinta) - 1 < self.apuntador or self.apuntador < 0:
                 return True

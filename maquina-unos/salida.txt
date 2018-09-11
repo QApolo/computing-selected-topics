@@ -1,97 +1,17 @@
-Cadena: 111
+Cadena: 1
 Estado actual: q0, apuntador: 1
 Siguiente estado: q1
 ********************
-Cadena: X11
+Cadena: X
 Estado actual: q1, apuntador: 2
-Siguiente estado: q1
-********************
-Cadena: X11
-Estado actual: q1, apuntador: 3
-Siguiente estado: q1
-********************
-Cadena: X11
-Estado actual: q1, apuntador: 4
 Siguiente estado: q2
 ********************
-Cadena: X11Y
-Estado actual: q2, apuntador: 3
-Siguiente estado: q2
-********************
-Cadena: X11Y
-Estado actual: q2, apuntador: 2
-Siguiente estado: q2
-********************
-Cadena: X11Y
+Cadena: XY
 Estado actual: q2, apuntador: 1
 Siguiente estado: q0
 ********************
-Cadena: 111Y
+Cadena: 1Y
 Estado actual: q0, apuntador: 2
-Siguiente estado: q1
-********************
-Cadena: 1X1Y
-Estado actual: q1, apuntador: 3
-Siguiente estado: q1
-********************
-Cadena: 1X1Y
-Estado actual: q1, apuntador: 4
-Siguiente estado: q1
-********************
-Cadena: 1X1Y
-Estado actual: q1, apuntador: 5
-Siguiente estado: q2
-********************
-Cadena: 1X1YY
-Estado actual: q2, apuntador: 4
-Siguiente estado: q2
-********************
-Cadena: 1X1YY
-Estado actual: q2, apuntador: 3
-Siguiente estado: q2
-********************
-Cadena: 1X1YY
-Estado actual: q2, apuntador: 2
-Siguiente estado: q0
-********************
-Cadena: 111YY
-Estado actual: q0, apuntador: 3
-Siguiente estado: q1
-********************
-Cadena: 11XYY
-Estado actual: q1, apuntador: 4
-Siguiente estado: q1
-********************
-Cadena: 11XYY
-Estado actual: q1, apuntador: 5
-Siguiente estado: q1
-********************
-Cadena: 11XYY
-Estado actual: q1, apuntador: 6
-Siguiente estado: q2
-********************
-Cadena: 11XYYY
-Estado actual: q2, apuntador: 5
-Siguiente estado: q2
-********************
-Cadena: 11XYYY
-Estado actual: q2, apuntador: 4
-Siguiente estado: q2
-********************
-Cadena: 11XYYY
-Estado actual: q2, apuntador: 3
-Siguiente estado: q0
-********************
-Cadena: 111YYY
-Estado actual: q0, apuntador: 4
 Siguiente estado: q3
 ********************
-Cadena: 1111YY
-Estado actual: q3, apuntador: 5
-Siguiente estado: q3
-********************
-Cadena: 11111Y
-Estado actual: q3, apuntador: 6
-Siguiente estado: q3
-********************
-Cadena final: 111111
+Cadena final: 11
