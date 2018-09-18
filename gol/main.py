@@ -11,7 +11,7 @@ class Gol:
         self.historia_x = list()
         self.historia_y = list()
         self.intervalo = 1000
-        self.tam = 100
+        self.tam = 50
         self.regla = [2, 3, 3, 3]
         self.pausa = True
         self.poblacion = np.random.randint(0, 2, size=(self.tam, self.tam))
