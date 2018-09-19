@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from matplotlib import style
 
 fig = plt.figure('Historial de unos')
 fig.suptitle("Historial de unos")
@@ -16,7 +15,6 @@ def animacion(i):
             x,y = linea.split(",")
             xs.append(int(x))
             ys.append(int(y))
-    print(xs)
     ax1.clear()
     ax1.plot(xs, ys)
 

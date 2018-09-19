@@ -21,7 +21,7 @@ class Example(Frame):
         # variables del juego de la vida
         self.pausa = True
         self.tam = 100
-        self.tam_cuadro = 20
+        self.tam_cuadro = 10
         self.distribucion = .5
         self.cuadritos = np.zeros(shape=(self.tam, self.tam), dtype=int)
         self.celulas = np.random.randint(2, size=(self.tam, self.tam), dtype=int)
@@ -37,10 +37,17 @@ class Example(Frame):
         archivo = open("grafica.txt", "w")
         archivo.close()
         self.canvas.delete('all')
+        self.update_idletasks()
         self.pausa = True
         self.contador = 0
         self.tiempo = 0
         self.tam = int(self.e2.get())
+        self.tam_cuadro = 0
+        while self.tam_cuadro*self.tam < 1000:
+            self.tam_cuadro += 1
+        if self.tam_cuadro*self.tam > 1000:
+            self.tam_cuadro -= 1
+        print(self.tam_cuadro)
         self.distribucion = self.barra.get()/100
         self.celulas = np.random.choice([1, 0], size=(self.tam, self.tam), p=[self.distribucion, 1-self.distribucion])
         self.cuadritos = np.zeros(shape=(self.tam, self.tam), dtype=int)
@@ -90,14 +97,13 @@ class Example(Frame):
 
         self.canvas.tag_bind("btncuadrito", "<Button-1>", self.pulsar_cuadrito)
         self.update()
-        print(self.celulas)
 
 
     def initUI(self):
         self.parent.title("Layout Test")
         self.pack(fill = BOTH, expand = 1)
 
-        self.canvas = Canvas(self, relief ='raised', width = 800, height = 800)
+        self.canvas = Canvas(self, relief ='raised', width = 1200, height = 800)
         self.canvas.pack(side = LEFT)
 
         Label(self, text="Regla:").pack(side=TOP)
@@ -191,7 +197,6 @@ class Example(Frame):
         self.animacion()
 
     def animacion(self):
-        print("ANIMACION")
         if not self.pausa:
             self.historia_y.append(self.contador)
             self.historia_x.append(self.tiempo)
@@ -224,7 +229,7 @@ class Example(Frame):
 
 def main():
     root = Tk()
-    root.geometry('1200x750+0+0')
+    root.geometry('1350x750+0+0')
     app = Example(root)
     app.mainloop()
 
