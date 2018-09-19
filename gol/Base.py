@@ -1,6 +1,7 @@
 from tkinter import Tk, Canvas, Frame, Button, Entry, Label
 from tkinter import BOTH, W, NW, SUNKEN, TOP, X, FLAT, LEFT, NE, E, Y, HORIZONTAL, VERTICAL, BOTTOM, RIGHT
 import numpy as np
+from tkcolorpicker import askcolor
 
 class Example(Frame):
     def __init__(self, parent):
@@ -14,11 +15,14 @@ class Example(Frame):
         self.regla = [2, 3, 3, 3]
         self.e1 = None
         self.contador = 0
+        self.colorBtn1 = None
+        self.colorBtn2 = None
         self.a = np.zeros(shape=(self.tam, self.tam), dtype=int)
         self.celulas = np.random.randint(2, size=(self.tam, self.tam))
         self.historia_x = list()
         self.historia_y = list()
-        self.archivo = open("grafica.txt", "w")
+        archivo = open("grafica.txt", "w")
+        archivo.close()
         for i in range(self.tam):
             for j in range(self.tam):
                 if self.celulas[i, j] == 1:
@@ -60,6 +64,38 @@ class Example(Frame):
         #button1_window = canvas1.create_window(610, 10, anchor=NE, window=button1)
         button1.pack(side = TOP)
 
+        self.colorBtn1 = Button(self, text="Selecciona el color de unos", command=self.getColorUnos, bg=self.unos)
+        self.colorBtn1.pack(side = TOP)
+
+        self.colorBtn2 = Button(self, text="Selecciona el color de ceros", command=self.getColorCeros, bg=self.ceros)
+        self.colorBtn2.pack(side=TOP)
+
+
+    def actualizar_color_matriz(self):
+        for i in range(self.tam):
+            for j in range(self.tam):
+                if self.celulas[i][j] == 0:
+                    self.canvas1.itemconfig(self.a[i][j], fill=self.ceros)
+                else:
+                    self.canvas1.itemconfig(self.a[i][j], fill=self.unos)
+
+        self.update_idletasks()
+
+    def getColorUnos(self):
+        color = askcolor()
+        if not color[1] == None:
+            self.unos = color[1]
+            self.colorBtn1.configure(bg=self.unos)
+            self.actualizar_color_matriz()
+
+
+    def getColorCeros(self):
+        color = askcolor()
+        if not color[1] == None:
+            self.ceros = color[1]
+            self.colorBtn2.configure(bg=self.ceros)
+            self.actualizar_color_matriz()
+
     def empezar_dentener(self):
         print("empezar_detener")
         texto = self.e1.get().split(",")
@@ -76,7 +112,9 @@ class Example(Frame):
         if not self.pausa:
             self.historia_y.append(self.contador)
             self.historia_x.append(self.tiempo)
-            self.archivo.write("")
+            archivo = open("grafica.txt", "a")
+            archivo.write("{},{}\n".format(self.tiempo, self.contador))
+            archivo.close()
             nueva_poblacion = self.celulas.copy()
             for i in range(self.tam):
                 print(i)
