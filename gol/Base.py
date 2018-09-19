@@ -1,4 +1,4 @@
-from tkinter import Tk, Canvas, Frame, Button, Entry, Label
+from tkinter import Tk, Canvas, Frame, Button, Entry, Label, Scale
 from tkinter import BOTH, W, NW, SUNKEN, TOP, X, FLAT, LEFT, NE, E, Y, HORIZONTAL, VERTICAL, BOTTOM, RIGHT
 import numpy as np
 from tkcolorpicker import askcolor
@@ -7,29 +7,50 @@ class Example(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
-        self.pausa = True
-        self.tam = 50
-        self.tam_cuadro = 2
+        # Elementos interfaz
         self.ceros = "white"
         self.unos = "black"
         self.regla = [2, 3, 3, 3]
         self.e1 = None
+        self.e2 = None
         self.contador = 0
         self.colorBtn1 = None
         self.colorBtn2 = None
-        self.a = np.zeros(shape=(self.tam, self.tam), dtype=int)
+        self.barra = None
+        self.canvas = None
+        # variables del juego de la vida
+        self.pausa = True
+        self.tam = 100
+        self.tam_cuadro = 20
+        self.distribucion = .5
+        self.cuadritos = np.zeros(shape=(self.tam, self.tam), dtype=int)
         self.celulas = np.random.randint(2, size=(self.tam, self.tam), dtype=int)
         self.historia_x = list()
         self.historia_y = list()
+        self.tiempo = 0
         # Historial de unos
         archivo = open("grafica.txt", "w")
         archivo.close()
-        self.canvas = None
-        self.tiempo = 0
         self.initUI()
-        self.update()
-        self.cargar()
-        # self.animacion()
+
+    def iniciar(self):
+        archivo = open("grafica.txt", "w")
+        archivo.close()
+        self.canvas.delete('all')
+        self.pausa = True
+        self.contador = 0
+        self.tiempo = 0
+        self.tam = int(self.e2.get())
+        self.distribucion = self.barra.get()/100
+        self.celulas = np.random.choice([1, 0], size=(self.tam, self.tam), p=[self.distribucion, 1-self.distribucion])
+        self.cuadritos = np.zeros(shape=(self.tam, self.tam), dtype=int)
+        texto = self.e1.get().split(",")
+        self.regla[0] = int(texto[0])
+        self.regla[1] = int(texto[1])
+        self.regla[2] = int(texto[2])
+        self.regla[3] = int(texto[3])
+        self.contar_unos()
+        self.re_dibujar()
 
 
     def contar_unos(self):
@@ -38,38 +59,67 @@ class Example(Frame):
                 if self.celulas[i, j] == 1:
                     self.contador += 1
 
+    def pulsar_cuadrito(self, event):
+        item = self.canvas.find_closest(event.x, event.y)[0]
+        x, y = np.where(self.cuadritos==item)
+        if self.canvas.itemcget(item, "fill") == self.unos:
+            self.canvas.itemconfig(item, fill=self.ceros)
+            self.celulas[x[0]][y[0]] = 0
+        else:
+            self.canvas.itemconfig(item, fill=self.unos)
+            self.celulas[x[0]][y[0]] = 1
+
 
     def re_dibujar(self):
         print("REDIBUJAR")
         for i in range(self.tam):
             for j in range(self.tam):
-                if self.celulas[i][j] == 0:
-                    self.a[i][j] = self.canvas1.create_rectangle(0 + (i * self.tam_cuadro), 0 + (j * self.tam_cuadro),
-                                                       self.tam_cuadro + (i * self.tam_cuadro), self.tam_cuadro + (j * self.tam_cuadro),
-                                                 fill=self.ceros, width=0)
+                if self.celulas[i, j] == 0:
+                    self.cuadritos[i, j] = self.canvas.create_rectangle(0 + (j * self.tam_cuadro),
+                                                                        0 + (i * self.tam_cuadro),
+                                                                        self.tam_cuadro + (j * self.tam_cuadro),
+                                                                        self.tam_cuadro + (i * self.tam_cuadro),
+                                                                        fill=self.ceros, width=0, tag="btncuadrito")
                 else:
-                    self.a[i][j] = self.canvas1.create_rectangle(0 + (i * self.tam_cuadro), 0 + (j * self.tam_cuadro),
-                                                       self.tam_cuadro + (i * self.tam_cuadro), self.tam_cuadro + (j * self.tam_cuadro),
-                                                 fill=self.unos, width=0)
+                    self.cuadritos[i, j] = self.canvas.create_rectangle(0 + (j * self.tam_cuadro),
+                                                                        0 + (i * self.tam_cuadro),
+                                                                        self.tam_cuadro + (j * self.tam_cuadro),
+                                                                        self.tam_cuadro + (i * self.tam_cuadro),
+                                                                        fill=self.unos, width=0, tag="btncuadrito")
                     self.contador += 1
+
+        self.canvas.tag_bind("btncuadrito", "<Button-1>", self.pulsar_cuadrito)
+        self.update()
+        print(self.celulas)
+
 
     def initUI(self):
         self.parent.title("Layout Test")
-        self.config(bg = '#F0F0F0')
         self.pack(fill = BOTH, expand = 1)
-        #create canvas
-        self.canvas1 = Canvas(self, relief = 'raised', width = self.tam, height = self.tam)
-        self.re_dibujar()
-        self.canvas1.pack(side = LEFT)
+
+        self.canvas = Canvas(self, relief ='raised', width = 800, height = 800)
+        self.canvas.pack(side = LEFT)
 
         Label(self, text="Regla:").pack(side=TOP)
         self.e1 = Entry(self, fg="black")
         self.e1.insert(10, "2,3,3,3")
         self.e1.pack(side=TOP)
-        #add quit button
+
+        Label(self, text="Tamaño:").pack(side=TOP)
+        self.e2 = Entry(self, fg="black")
+        self.e2.insert(10, "100")
+        self.e2.pack(side=TOP)
+
+        Label(self, text="Porcentaje de unos").pack(side=TOP)
+        self.barra = Scale(self, from_=0, to=100, orient=HORIZONTAL, tickinterval=50)
+        self.barra.set(50)
+        self.barra.pack(side=TOP)
+
+        btnIniciar = Button(self, text="Iniciar/Reiniciar", command=self.iniciar)
+        btnIniciar.pack(side=TOP)
+
         button1 = Button(self, text="Pausa/Reanudar", command=self.empezar_dentener, )
         button1.configure(width=10, activebackground="#33B5E5")
-        #button1_window = canvas1.create_window(610, 10, anchor=NE, window=button1)
         button1.pack(side = TOP)
 
         self.colorBtn1 = Button(self, text="Selecciona el color de unos", command=self.getColorUnos, bg=self.unos)
@@ -78,14 +128,17 @@ class Example(Frame):
         self.colorBtn2 = Button(self, text="Selecciona el color de ceros", command=self.getColorCeros, bg=self.ceros)
         self.colorBtn2.pack(side=TOP)
 
+        btnSave = Button(self, text="Guardar", command=self.guardar)
+        btnSave.pack(side=TOP)
+
 
     def actualizar_color_matriz(self):
         for i in range(self.tam):
             for j in range(self.tam):
                 if self.celulas[i][j] == 0:
-                    self.canvas1.itemconfig(self.a[i][j], fill=self.ceros)
+                    self.canvas.itemconfig(self.cuadritos[i][j], fill=self.ceros)
                 else:
-                    self.canvas1.itemconfig(self.a[i][j], fill=self.unos)
+                    self.canvas.itemconfig(self.cuadritos[i][j], fill=self.unos)
 
         self.update_idletasks()
 
@@ -119,31 +172,23 @@ class Example(Frame):
 
     def cargar(self):
         self.celulas = np.loadtxt("prueba.txt", dtype=int)
-        self.canvas1.delete('all')
+        self.canvas.delete('all')
         self.tam = self.celulas.shape[0]
         #self.celulas = np.random.randint(2, size=(self.tam, self.tam), dtype=int)
-        self.a = np.zeros(shape=(self.tam, self.tam), dtype=int)
+        self.cuadritos = np.zeros(shape=(self.tam, self.tam), dtype=int)
         print(self.celulas)
         print(self.tam)
-        self.canvas1.configure(width=self.tam, height=self.tam)
+        self.canvas.configure(width=self.tam, height=self.tam)
         # self.contar_unos()
         self.re_dibujar()
         self.update_idletasks()
         self.update()
 
-    def reiniciar(self):
-        pass
 
     def empezar_dentener(self):
         print("empezar_detener")
-        texto = self.e1.get().split(",")
-        self.regla[0] = int(texto[0])
-        self.regla[1] = int(texto[1])
-        self.regla[2] = int(texto[2])
-        self.regla[3] = int(texto[3])
-
-        print(texto)
         self.pausa = not self.pausa
+        self.animacion()
 
     def animacion(self):
         print("ANIMACION")
@@ -163,12 +208,12 @@ class Example(Frame):
                     if self.celulas[i, j] == 1:
                         if vecinos < self.regla[0] or vecinos > self.regla[1]:
                             nueva_poblacion[i, j] = 0
-                            self.canvas1.itemconfig(self.a[i][j], fill=self.ceros)
+                            self.canvas.itemconfig(self.cuadritos[i][j], fill=self.ceros)
                             self.contador -= 1
                     else:
                         if vecinos >= self.regla[2] and vecinos <= self.regla[3]:
                             nueva_poblacion[i, j] = 1
-                            self.canvas1.itemconfig(self.a[i][j], fill=self.unos)
+                            self.canvas.itemconfig(self.cuadritos[i][j], fill=self.unos)
                             self.contador += 1
 
             self.celulas[:] = nueva_poblacion[:]
@@ -179,7 +224,7 @@ class Example(Frame):
 
 def main():
     root = Tk()
-    root.geometry('1000x600+0+0')
+    root.geometry('1200x750+0+0')
     app = Example(root)
     app.mainloop()
 
