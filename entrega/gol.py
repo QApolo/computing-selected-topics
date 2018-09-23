@@ -1,9 +1,9 @@
 from tkinter import Tk, Canvas, Frame, Button, Entry, Label, Scale
-from tkinter import BOTH, W, NW, SUNKEN, TOP, X, FLAT, LEFT, NE, E, Y, HORIZONTAL, VERTICAL, BOTTOM, RIGHT
+from tkinter import BOTH, TOP, LEFT, HORIZONTAL
 import numpy as np
 from tkcolorpicker import askcolor
 
-class Example(Frame):
+class Ventana(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
@@ -107,12 +107,12 @@ class Example(Frame):
         self.canvas.pack(side = LEFT)
 
         Label(self, text="Regla:").pack(side=TOP)
-        self.e1 = Entry(self, fg="black")
+        self.e1 = Entry(self, fg="black", bg="white")
         self.e1.insert(10, "2,3,3,3")
         self.e1.pack(side=TOP)
 
         Label(self, text="Tamaño:").pack(side=TOP)
-        self.e2 = Entry(self, fg="black")
+        self.e2 = Entry(self, fg="black", bg="white")
         self.e2.insert(10, "100")
         self.e2.pack(side=TOP)
 
@@ -124,8 +124,7 @@ class Example(Frame):
         btnIniciar = Button(self, text="Iniciar/Reiniciar", command=self.iniciar)
         btnIniciar.pack(side=TOP)
 
-        button1 = Button(self, text="Pausa/Reanudar", command=self.empezar_dentener, )
-        button1.configure(width=10, activebackground="#33B5E5")
+        button1 = Button(self, text="Pausa/Reanudar", command=self.empezar_dentener)
         button1.pack(side = TOP)
 
         self.colorBtn1 = Button(self, text="Selecciona el color de unos", command=self.getColorUnos, bg=self.unos)
@@ -229,8 +228,8 @@ class Example(Frame):
 
 def main():
     root = Tk()
-    root.geometry('1350x750+0+0')
-    app = Example(root)
+    root.geometry('1360x750+0+0')
+    app = Ventana(root)
     app.mainloop()
 
 main()

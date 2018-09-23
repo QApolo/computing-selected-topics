@@ -1,54 +1,6 @@
-% !TeX spellcheck = es_ES
-\documentclass[a4paper,12pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{listings}
-\usepackage{color}
-\usepackage[spanish]{babel}
-\usepackage[nottoc,notlot,notlof]{tocbibind} % Hace que se agregen las referencias al indice
  
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
- 
-\lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
-}
- 
-\lstset{style=mystyle}
-
-%opening
-\title{Maquina de Turing que duplica la cantidad de unos}
-\author{Barrera Pérez Carlos Tonatihu \\ Profesor: Genaro Juárez Martínez \\ Computing Selected Topics \\ Grupo: 3CM8 }
-
-\begin{document}
-
-\maketitle
-\[ G_{1} = \frac{3.2 V}{4 V} = 0.8 = \frac{R2}{R1} = \frac{16 k\Omega}{20 k\Omega} \]
-\[ V_{o} = V_{2}(\frac{R_{6}}{R_{6}+R_{5}})(1+\frac{R_{4}}{R_{3}}) - V_{1}(\frac{R_{4}}{R_{3}}) \]
-
-
-\newpage
-\tableofcontents
-\newpage
-\section{Introducción}
+\section{Maquina de Turing}
+\subsection{Introducción}
 La elaboración de este programa consistió en elaborar un maquina de Turing capaz de duplicar la cantidad de unos en una cadena de unos, es decir, si la cadena que se ingresa es $ 11 $ entonces la cadena de salida sera $ 1111 $.
 
 Es por esto que la maquina sólo aceptara unos en la entrada mientras que los símbolos de la cinta incluirán a la X y la Y. De esta forma la maquina de Turing para este problema se define como:
@@ -72,7 +24,7 @@ EL funcionamiento de esta maquina se puede entender mejor con el diagrama de la 
 
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=12cm, height=7cm]{Turing-unos.png}
+ \includegraphics[width=12cm, height=7cm]{./img/Turing-unos.png}
  \caption{Representación gráfica de las transiciones de la maquina de Turing}
  \label{fig:diagrama}
 \end{center}
@@ -80,7 +32,7 @@ EL funcionamiento de esta maquina se puede entender mejor con el diagrama de la 
 
 El funcionamiento del programa empieza cuando se inserta una cadena de unos y la maquina empezara a trabajar, además de generar una cadena final se muestra una animación del como se están realizando las transiciones en la cinta de la maquina, por otro lado se imprime en consola el historial de movimientos que se hacen, este historial también se guarda en un archivo de texto.
 
-\section{Desarrollo}
+\subsection{Desarrollo}
 El código de este programa fue realizado en Python 3.7 y se utilizo la biblioteca tkinter para la parte gráfica.
 
 Archivo: turing.py
@@ -213,12 +165,12 @@ archivo.close()
 gui.mainloop()
 \end{lstlisting}
 
-\section{Pruebas}
+\subsection{Pruebas}
 El siguiente ejemplo es la cadena con un solo uno.
 
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=13cm, height=8cm]{uno_consola.png}
+ \includegraphics[width=13cm, height=8cm]{./img/uno_consola.png}
  \caption{Salida en consola}
  \label{fig:uno_consola}
 \end{center}
@@ -226,7 +178,7 @@ El siguiente ejemplo es la cadena con un solo uno.
 
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=13cm, height=8cm]{uno_historial.png}
+ \includegraphics[width=13cm, height=8cm]{./img/uno_historial.png}
  \caption{Registro de transiciones}
  \label{fig:uno_historial}
 \end{center}
@@ -234,7 +186,7 @@ El siguiente ejemplo es la cadena con un solo uno.
 
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=13cm, height=6cm]{uno_grafica.png}
+ \includegraphics[width=13cm, height=6cm]{./img/uno_grafica.png}
  \caption{Representación gráfica de las transiciones de la maquina de Turing}
  \label{fig:uno_grafica}
 \end{center}
@@ -243,7 +195,7 @@ El siguiente ejemplo es la cadena con un solo uno.
 En este ejemplo se inserta una cadena con dos unos.
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=13cm, height=20cm]{dos_consola.png}
+ \includegraphics[width=13cm, height=20cm]{./img/dos_consola.png}
  \caption{Salida en consola parte uno}
  \label{fig:dos_consola}
 \end{center}
@@ -251,7 +203,7 @@ En este ejemplo se inserta una cadena con dos unos.
 
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=13cm, height=7cm]{dos_console.png}
+ \includegraphics[width=13cm, height=7cm]{./img/dos_console.png}
  \caption{Salida en consola parte dos}
  \label{fig:dos_console}
 \end{center}
@@ -259,7 +211,7 @@ En este ejemplo se inserta una cadena con dos unos.
 
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=13cm, height=20cm]{dos_historial.png}
+ \includegraphics[width=13cm, height=20cm]{./img/dos_historial.png}
  \caption{Registro de transiciones}
  \label{fig:dos_historial}
 \end{center}
@@ -267,15 +219,11 @@ En este ejemplo se inserta una cadena con dos unos.
 
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=13cm, height=6cm]{dos_grafica.png}
+ \includegraphics[width=13cm, height=6cm]{./img/dos_grafica.png}
  \caption{Representación gráfica de las transiciones de la maquina de Turing}
  \label{fig:dos_grafica}
 \end{center}
 \end{figure}
 
-\nocite{LIBRO}
-
-\bibliographystyle{ieeetr}
-\bibliography{reporte}
-
-\end{document}
+\subsection{Conclusiones}
+El hacer este programa probó lo útil y poderosa que es la maquina de Turing en la solución de problemas, ya que como es evidente si un problema no se puede solucionar usando una maquina de Turing entonces es no computable y a pesar que este problema de duplicar una cadena no es difícil el implementar una maquina de Turing resulta en una solución bastante practica y fácil de implementar.
