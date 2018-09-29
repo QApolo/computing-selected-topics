@@ -41,9 +41,9 @@ class Ventana(Frame):
         self.tiempo = 0
         self.tam = int(self.e2.get())
         self.tam_cuadro = 0
-        while self.tam_cuadro*self.tam < 800:
+        while self.tam_cuadro*self.tam < 1000:
             self.tam_cuadro += 1
-        if self.tam_cuadro*self.tam > 800:
+        if self.tam_cuadro*self.tam > 1000:
             self.tam_cuadro -= 1
         self.distribucion = self.barra.get()/100
         self.celulas = np.random.choice([1, 0], size=(self.tam, self.tam), p=[self.distribucion, 1-self.distribucion])
@@ -57,7 +57,6 @@ class Ventana(Frame):
         self.re_dibujar()
 
     def contar_unos(self):
-        print("contar_unos {}".format(self.contador))
         for i in range(self.tam):
             for j in range(self.tam):
                 if self.celulas[i, j] == 1:
@@ -93,13 +92,13 @@ class Ventana(Frame):
                                                                         fill=self.unos, width=0, tag="btncuadrito")
 
         self.canvas.tag_bind("btncuadrito", "<Button-1>", self.pulsar_cuadrito)
-        self.update()
+        self.update_idletasks()
 
     def initUI(self):
         self.parent.title("Layout Test")
         self.pack(fill = BOTH, expand = 1)
 
-        self.canvas = Canvas(self, relief ='raised', width = 800, height = 800)
+        self.canvas = Canvas(self, relief ='raised', width = 1000, height = 1000)
         self.canvas.pack(side = LEFT)
 
         Label(self, text="Regla:").pack(side=TOP)
@@ -201,19 +200,19 @@ class Ventana(Frame):
                     if self.celulas[i, j] == 1:
                         if vecinos < self.regla[0] or vecinos > self.regla[1]:
                             nueva_poblacion[i, j] = 0
-                            #self.canvas.itemconfig(self.cuadritos[i][j], fill=self.ceros)
+                            self.canvas.itemconfig(self.cuadritos[i][j], fill=self.ceros)
                             self.contador -= 1
                     else:
                         if vecinos >= self.regla[2] and vecinos <= self.regla[3]:
                             nueva_poblacion[i, j] = 1
-                            #self.canvas.itemconfig(self.cuadritos[i][j], fill=self.unos)
+                            self.canvas.itemconfig(self.cuadritos[i][j], fill=self.unos)
                             self.contador += 1
 
             self.celulas[:] = nueva_poblacion[:]
-            # self.update_idletasks()
+            self.update_idletasks()
             print("Termino el t={}".format(self.tiempo))
             self.tiempo += 1
-        self.after(1, self.animacion)
+        self.after(100, self.animacion)
 
 
 def main():
