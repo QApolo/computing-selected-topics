@@ -43,7 +43,7 @@ import matplotlib.pyplot as plt
 
 class Grafos:
     def __init__(self):
-        self.tam = 4
+        self.tam = 5
         self.total = self.tam * self.tam
         self.origen = dict()
         self.regla = [2, 3, 3, 3]
@@ -107,22 +107,13 @@ class Grafos:
         m = self.matriz_actual
         continuar = True
         while continuar:
-            actual = self.mi_hash(m)
-            resultado = self.tabla.get(actual)
-            if resultado is None:
-                self.tabla.update({actual:"-1"})
-            elif resultado == "-1":
-                siguiente = self.obtener_siguiente(m)
-                sig_resultado = self.mi_hash(siguiente)
-                self.tabla.update({actual:sig_resultado})
-                m = siguiente
+            cadena_sig = self.siguiente_cadena(self.cadena_actual)
+            if cadena_sig == self.cadena_inicial:
+                break
             else:
-                cadena_sig = self.siguiente_cadena(self.cadena_actual)
-                if cadena_sig == self.cadena_inicial:
-                    break
-                else:
-                    self.cadena_actual = cadena_sig
-                    m = self.reverse_hash(cadena_sig)
+                self.cadena_actual = cadena_sig
+                #m = self.reverse_hash(cadena_sig)
+
         print("termino")
 
 grafos = Grafos()
