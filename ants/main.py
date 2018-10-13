@@ -1,65 +1,7 @@
-from tkinter import Tk, Frame, Canvas, Button
+from tkinter import Tk, Frame, Canvas, Button, Label, Entry
 import tkinter as tk
 import numpy as np
-
-colores_dict = {
-    "N": "red",
-    "S": "blue",
-    "E": "yellow",
-    "O": "green",
-}
-
-
-class Hormiga:
-    def __init__(self, x=0, y=0, limite=0):
-        """Direcciones:
-        N -> Norte
-        S -> Sur
-        E -> Este
-        O -> Oeste """
-        self.x = x
-        self.y = y
-        self.limite = limite
-        self.orientacion = 'S'
-
-    def mover(self, direccion):
-        if direccion == 0:
-            if self.orientacion == 'S':
-                self.orientacion = 'O'
-            elif self.orientacion == 'O':
-                self.orientacion = 'N'
-            elif self.orientacion == 'N':
-                self.orientacion = 'E'
-            else:
-                self.orientacion = 'S'
-        else:
-            if self.orientacion == 'S':
-                self.orientacion = 'E'
-            elif self.orientacion == 'E':
-                self.orientacion = 'N'
-            elif self.orientacion == 'N':
-                self.orientacion = 'O'
-            else:
-                self.orientacion = 'S'
-
-        if self.orientacion == 'S':
-            self.y += 1
-        elif self.orientacion == 'E':
-            self.x += 1
-        elif self.orientacion == 'N':
-            self.y -= 1
-        else:
-            self.x -= 1
-
-        self.y = self.checar_limite(self.y)
-        self.x = self.checar_limite(self.x)
-
-    def checar_limite(self, coord):
-        if coord < 0:
-            return self.limite - 1
-        if coord == self.limite:
-            return 0
-        return coord
+from hormiga import Hormiga, colores_dict
 
 
 class Ventana(Frame):
@@ -68,14 +10,15 @@ class Ventana(Frame):
         Frame.__init__(self, parent)
         self.parent = parent
         self.canvas = None
+        self.input_tam = None
 
         # Elementos de control
         self.cuadros = None
         self.matriz = None
-        self.tam = 100
-        self.tam_cuadro = 10
+        self.tam = 500
+        self.tam_cuadro = 2
         self.hormigas = list()
-        self.hormigas.append(Hormiga(50, 50, self.tam))
+        # self.hormigas.append(Hormiga(10, 50, self.tam))
         self.pausa = True
 
     def init_ui(self):
@@ -85,11 +28,41 @@ class Ventana(Frame):
         self.canvas = Canvas(self, relief='raised', width=1000, height=1000)
         self.canvas.pack(side=tk.LEFT)
 
-        btn_iniciar = Button(self, text="Iniciar/Reiniciar", command=self.iniciar)
+        Label(self, text="Tamaño:", font=(20,)).pack(side=tk.TOP)
+        self.input_tam = Entry(self, fg="black", bg="white")
+        self.input_tam.insert(10, "100")
+        self.input_tam.pack(side=tk.TOP)
+
+        btn_iniciar = Button(self, text="Iniciar/Reiniciar", command=self.iniciar, font=(20,))
         btn_iniciar.pack(side=tk.TOP)
 
-        btn_pausa = Button(self, text="Pausa/Reanudar", command=self.empezar_detener)
+        btn_pausa = Button(self, text="Reanudar/Pausa", command=self.empezar_detener, font=(20,))
         btn_pausa.pack(side=tk.TOP)
+
+        Label(self, text="Relación de colores y \n posicion de las hormiga:", font=(20,)).pack(side=tk.TOP)
+        Label(self, text="Abajo", bg="blue", font=(20,)).pack(side=tk.TOP)
+        Label(self, text="Arriba", bg="red", font=(20,)).pack(side=tk.TOP)
+        Label(self, text="Izquierda", bg="green", font=(20,)).pack(side=tk.TOP)
+        Label(self, text="Derecha", bg="yellow", fg="black", font=(20,)).pack(side=tk.TOP)
+
+    def iniciar(self):
+        print("iniciar")
+        self.hormigas[:] = []
+        self.canvas.delete('all')
+        self.update_idletasks()
+
+        self.tam = int(self.input_tam.get())
+        self.tam_cuadro = 0
+        while self.tam_cuadro * self.tam < 1000:
+            self.tam_cuadro += 1
+        if self.tam_cuadro * self.tam > 1000:
+            self.tam_cuadro -= 1
+
+        self.pausa = True
+        self.cuadros = np.zeros(shape=(self.tam, self.tam), dtype=int)
+        self.matriz = np.zeros(shape=(self.tam, self.tam), dtype=int)
+        self.redibujar()
+        # self.canvas.itemconfig(self.cuadros[self.hormigas[0].y, self.hormigas[0].x], fill=colores_dict[self.hormigas[0].orientacion])
 
     def empezar_detener(self):
         print("empezar_detener")
@@ -98,7 +71,6 @@ class Ventana(Frame):
 
     def animacion(self):
         if not self.pausa:
-            cambios = list()
             for hormiga in self.hormigas:
                 if self.matriz[hormiga.y, hormiga.x] == 0:
                     self.matriz[hormiga.y, hormiga.x] = 1
@@ -108,46 +80,39 @@ class Ventana(Frame):
                     self.matriz[hormiga.y, hormiga.x] = 0
                     self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill="black")
                     hormiga.mover(1)
-                self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill=colores_dict[hormiga.orientacion])
-            self.update_idletasks()
 
-            self.after(1000, self.animacion)
+                self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill=colores_dict[hormiga.orientacion])
+
+            self.update_idletasks()
+            self.after(10, self.animacion)
 
     def pulsar_cuadrito(self, event):
+        print("pulsar_cuadrito")
         item = self.canvas.find_closest(event.x, event.y)[0]
-        x, y = np.where(self.cuadros == item)
+        y, x = np.where(self.cuadros == item)
+        crear = True
+        for hormiga in self.hormigas:
+            if hormiga.x == x and hormiga.y == y:
+                hormiga.cambiar()
+                crear = False
+                self.canvas.itemconfig(item, fill=colores_dict[hormiga.orientacion])
+                break
 
-        #Checar si existe una hormiga en esa cordenada
-        # Si existe, cambiar su horientacion (color)
-        # Si no existe:
-            # Crear la hormiga en esa posicion y agregar a la lista
-
-        # if self.canvas.itemcget(item, "fill") == self.unos:
-        #     self.canvas.itemconfig(item, fill=self.ceros)
-        #     self.celulas[x[0]][y[0]] = 0
-        # else:
-        #     self.canvas.itemconfig(item, fill=self.unos)
-        #     self.celulas[x[0]][y[0]] = 1
-
-    def iniciar(self):
-        print("iniciar")
-        self.canvas.delete('all')
-        self.update_idletasks()
-
-        self.pausa = True
-        self.cuadros = np.zeros(shape=(self.tam, self.tam), dtype=int)
-        self.matriz = np.zeros(shape=(self.tam, self.tam), dtype=int)
-        self.redibujar()
-        self.canvas.itemconfig(self.cuadros[self.hormigas[0].x, self.hormigas[0].y], fill=colores_dict[self.hormigas[0].orientacion])
+        if crear:
+            hormiga = Hormiga(x[0], y[0], self.tam)
+            self.hormigas.append(hormiga)
+            self.canvas.itemconfig(item, fill=colores_dict[hormiga.orientacion])
 
     def redibujar(self):
         for i in range(self.tam):
             for j in range(self.tam):
                 self.cuadros[i, j] = self.canvas.create_rectangle(0 + (j * self.tam_cuadro),
-                                                                        0 + (i * self.tam_cuadro),
-                                                                        self.tam_cuadro + (j * self.tam_cuadro),
-                                                                        self.tam_cuadro + (i * self.tam_cuadro),
-                                                                        fill="black", width=0, tag="btncuadrito")
+                                                                  0 + (i * self.tam_cuadro),
+                                                                  self.tam_cuadro + (j * self.tam_cuadro),
+                                                                  self.tam_cuadro + (i * self.tam_cuadro),
+                                                                  fill="black", width=0, tag="btncuadrito")
+        self.canvas.tag_bind("btncuadrito", "<Button-1>", self.pulsar_cuadrito)
+
 
 def main():
     root = Tk()
@@ -155,5 +120,6 @@ def main():
     app = Ventana(root)
     app.init_ui()
     app.mainloop()
+
 
 main()
