@@ -95,7 +95,7 @@ class Ventana(Frame):
         self.update_idletasks()
 
     def initUI(self):
-        self.parent.title("Layout Test")
+        self.parent.title("Juego de la vida")
         self.pack(fill = BOTH, expand = 1)
 
         self.canvas = Canvas(self, relief ='raised', width = 1000, height = 1000)
