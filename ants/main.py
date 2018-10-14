@@ -1,4 +1,4 @@
-from tkinter import Tk, Frame, Canvas, Button, Label, Entry
+from tkinter import Tk, Frame, Canvas, Button, Label, Entry, Scale
 import tkinter as tk
 import numpy as np
 from hormiga import Hormiga, colores_dict
@@ -11,6 +11,7 @@ class Ventana(Frame):
         self.parent = parent
         self.canvas = None
         self.input_tam = None
+        self.barra = None
 
         # Elementos de control
         self.cuadros = None
@@ -20,6 +21,7 @@ class Ventana(Frame):
         self.hormigas = list()
         # self.hormigas.append(Hormiga(10, 50, self.tam))
         self.pausa = True
+        self.distribucion = .05
 
     def init_ui(self):
         self.parent.title("Hormiga de Lagnton")
@@ -32,6 +34,11 @@ class Ventana(Frame):
         self.input_tam = Entry(self, fg="black", bg="white")
         self.input_tam.insert(10, "100")
         self.input_tam.pack(side=tk.TOP)
+
+        Label(self, text="Porcentaje de hormigas", font=(20,)).pack(side=tk.TOP)
+        self.barra = Scale(self, from_=0, to=100, orient=tk.HORIZONTAL, tickinterval=50)
+        self.barra.set(5)
+        self.barra.pack(side=tk.TOP)
 
         btn_iniciar = Button(self, text="Iniciar/Reiniciar", command=self.iniciar, font=(20,))
         btn_iniciar.pack(side=tk.TOP)
@@ -58,9 +65,11 @@ class Ventana(Frame):
         if self.tam_cuadro * self.tam > 1000:
             self.tam_cuadro -= 1
 
+        self.distribucion = self.barra.get() / 100
+
         self.pausa = True
         self.cuadros = np.zeros(shape=(self.tam, self.tam), dtype=int)
-        self.matriz = np.zeros(shape=(self.tam, self.tam), dtype=int)
+        self.matriz = np.random.choice([1, 0], size=(self.tam, self.tam), p=[self.distribucion, 1-self.distribucion])
         self.redibujar()
         # self.canvas.itemconfig(self.cuadros[self.hormigas[0].y, self.hormigas[0].x], fill=colores_dict[self.hormigas[0].orientacion])
 
@@ -104,14 +113,28 @@ class Ventana(Frame):
             self.canvas.itemconfig(item, fill=colores_dict[hormiga.orientacion])
 
     def redibujar(self):
+        print("redibujar")
         for i in range(self.tam):
             for j in range(self.tam):
-                self.cuadros[i, j] = self.canvas.create_rectangle(0 + (j * self.tam_cuadro),
-                                                                  0 + (i * self.tam_cuadro),
-                                                                  self.tam_cuadro + (j * self.tam_cuadro),
-                                                                  self.tam_cuadro + (i * self.tam_cuadro),
-                                                                  fill="black", width=0, tag="btncuadrito")
+                if self.matriz[i, j] == 1:
+                    self.matriz[i, j] = 0
+                    hormiga = Hormiga(j, i, self.tam)
+                    hormiga.orientacion = np.random.choice(['N', 'S', 'E', 'O'])
+                    self.cuadros[i, j] = self.canvas.create_rectangle(0 + (j * self.tam_cuadro),
+                                                                     0 + (i * self.tam_cuadro),
+                                                                     self.tam_cuadro + (j * self.tam_cuadro),
+                                                                     self.tam_cuadro + (i * self.tam_cuadro),
+                                                                     fill=colores_dict[hormiga.orientacion],
+                                                                     width=0, tag="btncuadrito")
+                    self.hormigas.append(hormiga)
+                else:
+                    self.cuadros[i, j] = self.canvas.create_rectangle(0 + (j * self.tam_cuadro),
+                                                                      0 + (i * self.tam_cuadro),
+                                                                      self.tam_cuadro + (j * self.tam_cuadro),
+                                                                      self.tam_cuadro + (i * self.tam_cuadro),
+                                                                      fill="black", width=0, tag="btncuadrito")
         self.canvas.tag_bind("btncuadrito", "<Button-1>", self.pulsar_cuadrito)
+        self.update_idletasks()
 
 
 def main():
