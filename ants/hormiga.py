@@ -17,6 +17,7 @@ class Hormiga:
         self.y = y
         self.limite = limite
         self.orientacion = 'S'
+        self.color = "white"
 
     def mover(self, direccion):
         if direccion == 0:

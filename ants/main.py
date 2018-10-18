@@ -1,6 +1,8 @@
 from tkinter import Tk, Frame, Canvas, Button, Label, Entry, Scale
 import tkinter as tk
+from tkcolorpicker import askcolor
 import numpy as np
+import random as pyrandom
 from hormiga import Hormiga, colores_dict
 
 
@@ -12,6 +14,7 @@ class Ventana(Frame):
         self.canvas = None
         self.input_tam = None
         self.barra = None
+        self.default_color = "white"
 
         # Elementos de control
         self.cuadros = None
@@ -19,7 +22,6 @@ class Ventana(Frame):
         self.tam = 500
         self.tam_cuadro = 2
         self.hormigas = list()
-        # self.hormigas.append(Hormiga(10, 50, self.tam))
         self.pausa = True
         self.distribucion = .05
 
@@ -39,6 +41,9 @@ class Ventana(Frame):
         self.barra = Scale(self, from_=0, to=100, orient=tk.HORIZONTAL, tickinterval=50)
         self.barra.set(5)
         self.barra.pack(side=tk.TOP)
+
+        self.btn_color = Button(self, text="Color de la hormiga", command=self.get_color, bg=self.default_color)
+        self.btn_color.pack(side=tk.TOP)
 
         btn_iniciar = Button(self, text="Iniciar/Reiniciar", command=self.iniciar, font=(20,))
         btn_iniciar.pack(side=tk.TOP)
@@ -71,7 +76,13 @@ class Ventana(Frame):
         self.cuadros = np.zeros(shape=(self.tam, self.tam), dtype=int)
         self.matriz = np.random.choice([1, 0], size=(self.tam, self.tam), p=[self.distribucion, 1-self.distribucion])
         self.redibujar()
-        # self.canvas.itemconfig(self.cuadros[self.hormigas[0].y, self.hormigas[0].x], fill=colores_dict[self.hormigas[0].orientacion])
+
+    def get_color(self):
+        color = askcolor()
+        if not color[1] == None:
+            self.default_color = color[1]
+            self.btn_color.configure(bg=self.default_color)
+
 
     def empezar_detener(self):
         print("empezar_detener")
@@ -83,7 +94,7 @@ class Ventana(Frame):
             for hormiga in self.hormigas:
                 if self.matriz[hormiga.y, hormiga.x] == 0:
                     self.matriz[hormiga.y, hormiga.x] = 1
-                    self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill="white")
+                    self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill=hormiga.color)
                     hormiga.mover(0)
                 else:
                     self.matriz[hormiga.y, hormiga.x] = 0
@@ -93,7 +104,7 @@ class Ventana(Frame):
                 self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill=colores_dict[hormiga.orientacion])
 
             self.update_idletasks()
-            self.after(10, self.animacion)
+            self.after(5, self.animacion)
 
     def pulsar_cuadrito(self, event):
         print("pulsar_cuadrito")
@@ -109,6 +120,7 @@ class Ventana(Frame):
 
         if crear:
             hormiga = Hormiga(x[0], y[0], self.tam)
+            hormiga.color = self.default_color
             self.hormigas.append(hormiga)
             self.canvas.itemconfig(item, fill=colores_dict[hormiga.orientacion])
 
@@ -120,12 +132,13 @@ class Ventana(Frame):
                     self.matriz[i, j] = 0
                     hormiga = Hormiga(j, i, self.tam)
                     hormiga.orientacion = np.random.choice(['N', 'S', 'E', 'O'])
+                    hormiga.color = "#%06x" % pyrandom.randint(0, 0xFFFFFF)
                     self.cuadros[i, j] = self.canvas.create_rectangle(0 + (j * self.tam_cuadro),
-                                                                     0 + (i * self.tam_cuadro),
-                                                                     self.tam_cuadro + (j * self.tam_cuadro),
-                                                                     self.tam_cuadro + (i * self.tam_cuadro),
-                                                                     fill=colores_dict[hormiga.orientacion],
-                                                                     width=0, tag="btncuadrito")
+                                                                      0 + (i * self.tam_cuadro),
+                                                                      self.tam_cuadro + (j * self.tam_cuadro),
+                                                                      self.tam_cuadro + (i * self.tam_cuadro),
+                                                                      fill=colores_dict[hormiga.orientacion],
+                                                                      width=0, tag="btncuadrito")
                     self.hormigas.append(hormiga)
                 else:
                     self.cuadros[i, j] = self.canvas.create_rectangle(0 + (j * self.tam_cuadro),
