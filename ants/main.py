@@ -1,4 +1,4 @@
-from tkinter import Tk, Frame, Canvas, Button, Label, Entry, Scale
+from tkinter import Tk, Frame, Canvas, Button, Label, Entry, Scale, Scrollbar
 import tkinter as tk
 from tkcolorpicker import askcolor
 import numpy as np
@@ -10,11 +10,13 @@ class Ventana(Frame):
     def __init__(self, parent):
         # Elemetnso de la interfaz
         Frame.__init__(self, parent)
+        self.grid(row=0, column=0)
         self.parent = parent
         self.canvas = None
         self.input_tam = None
         self.barra = None
         self.default_color = "white"
+        self.btn_color = None
 
         # Elementos de control
         self.cuadros = None
@@ -30,6 +32,11 @@ class Ventana(Frame):
         self.pack(fill=tk.BOTH, expand=1)
 
         self.canvas = Canvas(self, relief='raised', width=1000, height=1000)
+        scroll = Scrollbar(self, orient=tk.VERTICAL)
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        scroll.config(command=self.canvas.yview)
+
+        self.canvas.config(yscrollcommand=scroll.set)
         self.canvas.pack(side=tk.LEFT)
 
         Label(self, text="Tamaño:", font=(20,)).pack(side=tk.TOP)
@@ -79,10 +86,9 @@ class Ventana(Frame):
 
     def get_color(self):
         color = askcolor()
-        if not color[1] == None:
+        if not color[1] is None:
             self.default_color = color[1]
             self.btn_color.configure(bg=self.default_color)
-
 
     def empezar_detener(self):
         print("empezar_detener")
@@ -91,16 +97,20 @@ class Ventana(Frame):
 
     def animacion(self):
         if not self.pausa:
+            conjunto = set()
             for hormiga in self.hormigas:
                 if self.matriz[hormiga.y, hormiga.x] == 0:
-                    self.matriz[hormiga.y, hormiga.x] = 1
+                    if (hormiga.y, hormiga.x) not in conjunto:
+                        self.matriz[hormiga.y, hormiga.x] = 1
+                        conjunto.add((hormiga.y, hormiga.x))
                     self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill=hormiga.color)
                     hormiga.mover(0)
                 else:
-                    self.matriz[hormiga.y, hormiga.x] = 0
+                    if (hormiga.y, hormiga.x) not in conjunto:
+                        self.matriz[hormiga.y, hormiga.x] = 0
+                        conjunto.add((hormiga.y, hormiga.x))
                     self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill="black")
                     hormiga.mover(1)
-
                 self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill=colores_dict[hormiga.orientacion])
 
             self.update_idletasks()
