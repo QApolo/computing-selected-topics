@@ -1,8 +1,16 @@
+import random
+
 colores_dict = {
     "N": "red",
     "S": "blue",
     "E": "yellow",
     "O": "green",
+}
+
+tipos_dict = {
+    1: "obrera",
+    2: "soldado",
+    3: "reina",
 }
 
 
@@ -12,12 +20,14 @@ class Hormiga:
         N -> Norte
         S -> Sur
         E -> Este
-        O -> Oeste """
+        O -> Oeste
+        """
         self.x = x
         self.y = y
         self.limite = limite
         self.orientacion = 'S'
         self.color = "white"
+        self.tipo = 1
 
     def mover(self, direccion):
         if direccion == 0:
@@ -67,3 +77,20 @@ class Hormiga:
             self.orientacion = 'E'
         else:
             self.orientacion = 'S'
+
+    def get_tipo(self):
+        return tipos_dict[self.tipo]
+
+
+class Reina(Hormiga):
+    def __init__(self):
+        super().__init__()
+        self.color = "purple"
+        self.tipo = 3
+
+
+class Soldado(Hormiga):
+    def __init__(self):
+        super().__init__()
+        self.color = "pink"
+        self.tipo = 2
