@@ -212,9 +212,9 @@ class Ventana(Frame):
             self.update_idletasks()
             print("Termino el t={}".format(self.tiempo))
             self.tiempo += 1
-        self.after(100, self.animacion)
+            self.after(100, self.animacion)
 
-
+# 2 2 7 7
 def main():
     root = Tk()
     root.geometry('1360x750+0+0')

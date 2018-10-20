@@ -1,5 +1,3 @@
-import random
-
 colores_dict = {
     "N": "red",
     "S": "blue",
@@ -82,15 +80,15 @@ class Hormiga:
         return tipos_dict[self.tipo]
 
 
+class Soldado(Hormiga):
+    def __init__(self, x=0, y=0, limite=0):
+        super().__init__(x, y, limite)
+        self.color = "orange"
+        self.tipo = 2
+
+
 class Reina(Hormiga):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, x=0, y=0, limite=0):
+        super().__init__(x, y, limite)
         self.color = "purple"
         self.tipo = 3
-
-
-class Soldado(Hormiga):
-    def __init__(self):
-        super().__init__()
-        self.color = "pink"
-        self.tipo = 2
