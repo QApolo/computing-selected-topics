@@ -1,7 +1,9 @@
 from tkinter import Tk, Frame, Canvas, Button, Label, Entry, Scale, Scrollbar, Radiobutton, IntVar
 import tkinter as tk
 import numpy as np
-from hormiga import Soldado, Hormiga, Reina, colores_dict
+from hormiga import Soldado, Hormiga, Reina, colores_dict, tipos_dict, direcciones_dict
+import datetime
+import time
 
 
 class Ventana(Frame):
@@ -27,6 +29,8 @@ class Ventana(Frame):
         self.radio3 = None
         self.tiempo = 0
         self.contador = [0, 0, 0]
+        self.nom_archivo = "{}.csv".format(self.obtener_hora())
+        self.archivo = None
 
     def init_ui(self):
         self.parent.title("Hormiga de Lagnton")
@@ -78,6 +82,9 @@ class Ventana(Frame):
 
     def iniciar(self):
         print("iniciar")
+        self.nom_archivo = "{}.csv".format(self.obtener_hora())
+        self.archivo = open(self.nom_archivo, "w")
+        self.archivo.close()
         self.contador[:] = [0, 0, 0]
         self.tiempo = 0
         self.hormigas[:] = []
@@ -101,23 +108,30 @@ class Ventana(Frame):
     def seleccion(self):
         print(str(self.mi_var.get()))
 
+    def crear_hormiga(self, j, i):
+        tipo = np.random.choice([1, 2, 3], p=[.9, .08, .02])
+        if tipo == 1:
+            hormiga = Hormiga(j, i, self.tam)
+            self.contador[0] += 1
+        elif tipo == 2:
+            hormiga = Soldado(j, i, self.tam)
+            self.contador[1] += 1
+        else:
+            hormiga = Reina(j, i, self.tam)
+            self.contador[2] += 1
+        hormiga.orientacion = np.random.choice(['N', 'S', 'E', 'O'])
+        return hormiga
+
+    def obtener_hora(self):
+        return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H:%M:%S')
+
     def redibujar(self):
         print("redibujar")
         for i in range(self.tam):
             for j in range(self.tam):
                 if self.matriz[i, j] == 1:
                     self.matriz[i, j] = 0
-                    tipo = np.random.choice([1, 2, 3], p=[.9, .09, .01])
-                    if tipo == 1:
-                        hormiga = Hormiga(j, i, self.tam)
-                        self.contador[0] += 1
-                    elif tipo == 2:
-                        hormiga = Soldado(i, j, self.tam)
-                        self.contador[1] += 1
-                    else:
-                        hormiga = Reina(i, j, self.tam)
-                        self.contador[2] += 1
-                    hormiga.orientacion = np.random.choice(['N', 'S', 'E', 'O'])
+                    hormiga = self.crear_hormiga(j, i)
                     self.cuadros[i, j] = self.canvas.create_rectangle(0 + (j * self.tam_cuadro),
                                                                       0 + (i * self.tam_cuadro),
                                                                       self.tam_cuadro + (j * self.tam_cuadro),
@@ -132,12 +146,26 @@ class Ventana(Frame):
                                                                       self.tam_cuadro + (i * self.tam_cuadro),
                                                                       fill="black", width=0, tag="btncuadrito")
         self.canvas.tag_bind("btncuadrito", "<Button-1>", self.pulsar_cuadrito)
-        self.canvas.tag_bind("btncuadrito", "<Button-2>", self.borrar_cuadrito)
+        self.canvas.tag_bind("btncuadrito", "<Button-3>", self.borrar_cuadrito)
         self.update_idletasks()
         print(self.contador)
 
     def borrar_cuadrito(self, event):
         print("borrar_cuadrito")
+        item = self.canvas.find_closest(event.x, event.y)[0]
+        y, x = np.where(self.cuadros == item)
+        contador = 0
+        for hormiga in self.hormigas:
+            if hormiga.x == x and hormiga.y == y:
+                self.contador[hormiga.tipo-1] -= 1
+                if self.matriz[hormiga.y, hormiga.x] == 1:
+                    self.canvas.itemconfig(item, fill="white")
+                else:
+                    self.canvas.itemconfig(item, fill="black")
+                break
+            contador += 1
+        if contador < len(self.hormigas):
+            self.hormigas.pop(contador)
 
     def pulsar_cuadrito(self, event):
         print("pulsar_cuadrito")
@@ -154,15 +182,60 @@ class Ventana(Frame):
         if crear:
             if self.mi_var.get() == 1:
                 hormiga = Hormiga(x[0], y[0], self.tam)
+                self.contador[0] += 1
             elif self.mi_var.get() == 2:
                 hormiga = Soldado(x[0], y[0], self.tam)
+                self.contador[1] += 1
             else:
                 hormiga = Reina(x[0], y[0], self.tam)
+                self.contador[2] += 1
             self.hormigas.append(hormiga)
             self.canvas.itemconfig(item, fill=colores_dict[hormiga.orientacion])
 
     def animacion(self):
-        pass
+        if not self.pausa:
+            archivo = open(self.nom_archivo, "a")
+            archivo.write("{},{},{},{}\n".format(self.tiempo, self.contador[0], self.contador[1], self.contador[2]))
+            archivo.close()
+            reinas = list()
+            soldados = list()
+            cont = 0
+            for hormiga in self.hormigas:
+                if hormiga.tipo == tipos_dict["reina"] and (hormiga.orientacion == "N" or hormiga.orientacion == "E"):
+                    reinas.append(cont)
+                elif hormiga.tipo == tipos_dict["soldado"] and (hormiga.orientacion == "N" or hormiga.orientacion == "E"):
+                    soldados.append(cont)
+                cont += 1
+            for i in reinas:
+                for j in soldados:
+                    if self.hormigas[i].x == self.hormigas[j].x and self.hormigas[i].y == self.hormigas[j].y:
+                        print("TALVEZ")
+                        if self.hormigas[i].orientacion == "N" and self.hormigas[j].orientacion == "E":
+                            print("CREAR")
+                            self.hormigas.append(self.crear_hormiga(self.hormigas[i].x, self.hormigas[i].y))
+                        elif self.hormigas[i].orientacion == "E" and self.hormigas[j].orientacion == "N":
+                            self.hormigas.append(self.crear_hormiga(self.hormigas[i].x, self.hormigas[i].y))
+                            print("crear")
+
+            conjunto = set()
+            for hormiga in self.hormigas:
+                if self.matriz[hormiga.y, hormiga.x] == 0:
+                    if (hormiga.y, hormiga.x) not in conjunto:
+                        self.matriz[hormiga.y, hormiga.x] = 1
+                        conjunto.add((hormiga.y, hormiga.x))
+                    self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill=hormiga.color)
+                    hormiga.mover(0)
+                else:
+                    if (hormiga.y, hormiga.x) not in conjunto:
+                        self.matriz[hormiga.y, hormiga.x] = 0
+                        conjunto.add((hormiga.y, hormiga.x))
+                    self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill="black")
+                    hormiga.mover(1)
+                self.canvas.itemconfig(self.cuadros[hormiga.y, hormiga.x], fill=colores_dict[hormiga.orientacion])
+
+            self.update_idletasks()
+            self.after(100, self.animacion)
+            self.tiempo += 1
 
     def empezar_detener(self):
         print("empezar_detener")

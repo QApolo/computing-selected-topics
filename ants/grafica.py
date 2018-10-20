@@ -33,5 +33,5 @@ def animacion(i, *args):
     ax1.set_ylabel('Cantidad')
 
 
-ani = animation.FuncAnimation(fig, animacion, interval=10000, fargs=(archivo,))
+ani = animation.FuncAnimation(fig, animacion, interval=100, fargs=(archivo,))
 plt.show()

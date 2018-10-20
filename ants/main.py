@@ -116,6 +116,22 @@ class Ventana(Frame):
             self.update_idletasks()
             self.after(5, self.animacion)
 
+    def borrar_cuadrito(self, event):
+        print("borrar_cuadrito")
+        item = self.canvas.find_closest(event.x, event.y)[0]
+        y, x = np.where(self.cuadros == item)
+        contador = 0
+        for hormiga in self.hormigas:
+            if hormiga.x == x and hormiga.y == y:
+                if self.matriz[hormiga.y, hormiga.x] == 1:
+                    self.canvas.itemconfig(item, fill="white")
+                else:
+                    self.canvas.itemconfig(item, fill="black")
+                break
+            contador += 1
+        if contador < len(self.hormigas):
+            self.hormigas.pop(contador)
+
     def pulsar_cuadrito(self, event):
         print("pulsar_cuadrito")
         item = self.canvas.find_closest(event.x, event.y)[0]
@@ -157,6 +173,8 @@ class Ventana(Frame):
                                                                       self.tam_cuadro + (i * self.tam_cuadro),
                                                                       fill="black", width=0, tag="btncuadrito")
         self.canvas.tag_bind("btncuadrito", "<Button-1>", self.pulsar_cuadrito)
+        self.canvas.tag_bind("btncuadrito", "<Button-3>", self.borrar_cuadrito)
+
         self.update_idletasks()
 
 

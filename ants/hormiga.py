@@ -6,9 +6,16 @@ colores_dict = {
 }
 
 tipos_dict = {
-    1: "obrera",
-    2: "soldado",
-    3: "reina",
+    "obrera": 1,
+    "soldado": 2,
+    "reina": 3,
+}
+
+direcciones_dict = {
+    "norte": "N",
+    "sur": "S",
+    "este": "E",
+    "oeste": "O",
 }
 
 
@@ -25,7 +32,7 @@ class Hormiga:
         self.limite = limite
         self.orientacion = 'S'
         self.color = "white"
-        self.tipo = 1
+        self.tipo = tipos_dict["obrera"]
 
     def mover(self, direccion):
         if direccion == 0:
@@ -76,19 +83,16 @@ class Hormiga:
         else:
             self.orientacion = 'S'
 
-    def get_tipo(self):
-        return tipos_dict[self.tipo]
-
 
 class Soldado(Hormiga):
     def __init__(self, x=0, y=0, limite=0):
         super().__init__(x, y, limite)
         self.color = "orange"
-        self.tipo = 2
+        self.tipo = tipos_dict["soldado"]
 
 
 class Reina(Hormiga):
     def __init__(self, x=0, y=0, limite=0):
         super().__init__(x, y, limite)
         self.color = "purple"
-        self.tipo = 3
+        self.tipo = tipos_dict["reina"]
