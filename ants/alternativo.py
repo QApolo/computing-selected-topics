@@ -1,7 +1,7 @@
 from tkinter import Tk, Frame, Canvas, Button, Label, Entry, Scale, Scrollbar, Radiobutton, IntVar
 import tkinter as tk
 import numpy as np
-from hormiga import Soldado, Hormiga, Reina, colores_dict, tipos_dict, direcciones_dict
+from hormiga import Soldado, Hormiga, Reina, colores_dict, tipos_dict
 import datetime
 import time
 
@@ -122,7 +122,8 @@ class Ventana(Frame):
         hormiga.orientacion = np.random.choice(['N', 'S', 'E', 'O'])
         return hormiga
 
-    def obtener_hora(self):
+    @staticmethod
+    def obtener_hora():
         return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H:%M:%S')
 
     def redibujar(self):
@@ -203,19 +204,17 @@ class Ventana(Frame):
             for hormiga in self.hormigas:
                 if hormiga.tipo == tipos_dict["reina"] and (hormiga.orientacion == "N" or hormiga.orientacion == "E"):
                     reinas.append(cont)
-                elif hormiga.tipo == tipos_dict["soldado"] and (hormiga.orientacion == "N" or hormiga.orientacion == "E"):
+                elif hormiga.tipo == tipos_dict["soldado"] and (hormiga.orientacion == "N"
+                                                                or hormiga.orientacion == "E"):
                     soldados.append(cont)
                 cont += 1
             for i in reinas:
                 for j in soldados:
                     if self.hormigas[i].x == self.hormigas[j].x and self.hormigas[i].y == self.hormigas[j].y:
-                        print("TALVEZ")
                         if self.hormigas[i].orientacion == "N" and self.hormigas[j].orientacion == "E":
-                            print("CREAR")
                             self.hormigas.append(self.crear_hormiga(self.hormigas[i].x, self.hormigas[i].y))
                         elif self.hormigas[i].orientacion == "E" and self.hormigas[j].orientacion == "N":
                             self.hormigas.append(self.crear_hormiga(self.hormigas[i].x, self.hormigas[i].y))
-                            print("crear")
 
             conjunto = set()
             for hormiga in self.hormigas:

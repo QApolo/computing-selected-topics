@@ -11,13 +11,6 @@ tipos_dict = {
     "reina": 3,
 }
 
-direcciones_dict = {
-    "norte": "N",
-    "sur": "S",
-    "este": "E",
-    "oeste": "O",
-}
-
 
 class Hormiga:
     def __init__(self, x=0, y=0, limite=0):
