@@ -15,6 +15,7 @@ class Ventana(Frame):
         self.barra = None
 
         # Elementos de control
+        self.tiempo_vida = 50
         self.cuadros = None
         self.matriz = None
         self.tam = 100
@@ -218,6 +219,10 @@ class Ventana(Frame):
 
             conjunto = set()
             for hormiga in self.hormigas:
+                if hormiga.vida == self.tiempo_vida:
+                    self.contador[hormiga.tipo-1] -= 1
+                    self.hormigas.remove(hormiga)
+                    continue
                 if self.matriz[hormiga.y, hormiga.x] == 0:
                     if (hormiga.y, hormiga.x) not in conjunto:
                         self.matriz[hormiga.y, hormiga.x] = 1

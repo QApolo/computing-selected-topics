@@ -26,8 +26,10 @@ class Hormiga:
         self.orientacion = 'S'
         self.color = "white"
         self.tipo = tipos_dict["obrera"]
+        self.vida = 0
 
     def mover(self, direccion):
+        self.vida += 1
         if direccion == 0:
             if self.orientacion == 'S':
                 self.orientacion = 'O'
