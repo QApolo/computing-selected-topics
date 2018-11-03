@@ -1,9 +1,19 @@
-from tkinter import Tk, Canvas, Frame, Button, Entry, Label, Scale, filedialog
+from tkinter import Tk, Canvas, Frame, Button, Entry, Label, Scale, filedialog, PhotoImage
 from tkinter import BOTH, TOP, LEFT, HORIZONTAL
 import numpy as np
 from tkcolorpicker import askcolor
 import datetime
 import time
+
+
+dict_tipos = {
+    "nada": 0,
+    "cubo": 1,
+    "glider": 2,
+    "glider2": 3,
+    "glider3": 4,
+    "oscilador": 5,
+}
 
 
 class Ventana(Frame):
@@ -21,6 +31,11 @@ class Ventana(Frame):
         self.colorBtn2 = None
         self.barra = None
         self.canvas = None
+        self.cubo_image = None
+        self.glider = None
+        self.glider2 = None
+        self.glider3 = None
+        self.oscilador = None
         # variables del juego de la vida
         self.pausa = True
         self.tam = 100
@@ -29,6 +44,7 @@ class Ventana(Frame):
         self.cuadritos = np.zeros(shape=(self.tam, self.tam), dtype=int)
         self.celulas = np.random.randint(2, size=(self.tam, self.tam), dtype=int)
         self.tiempo = 0
+        self.tipo_insertar = dict_tipos["nada"]
         # Historial de unos
         self.nom_archivo = None
 
@@ -69,15 +85,84 @@ class Ventana(Frame):
 
     def pulsar_cuadrito(self, event):
         item = self.canvas.find_closest(event.x, event.y)[0]
-        x, y = np.where(self.cuadritos == item)
-        if self.canvas.itemcget(item, "fill") == self.unos:
-            self.canvas.itemconfig(item, fill=self.ceros)
-            self.celulas[x[0]][y[0]] = 0
-            self.contador -= 1
-        else:
-            self.canvas.itemconfig(item, fill=self.unos)
-            self.celulas[x[0]][y[0]] = 1
+        i, j = np.where(self.cuadritos == item)
+        print("{}, {}".format(i[0], j[0]))
+        if self.tipo_insertar == dict_tipos["nada"]:
+            if self.canvas.itemcget(item, "fill") == self.unos:
+                self.canvas.itemconfig(item, fill=self.ceros)
+                self.celulas[i[0]][j[0]] = 0
+                self.contador -= 1
+            else:
+                self.canvas.itemconfig(item, fill=self.unos)
+                self.celulas[i[0]][j[0]] = 1
+                self.contador += 1
+        elif self.tipo_insertar == dict_tipos["cubo"]:
+            print("cubo")
+            print(self.celulas)
+            self.insertar_cubo(i[0], j[0])
+            print(self.celulas)
+        elif self.tipo_insertar == dict_tipos["glider"]:
+            print("glider")
+            self.insertar_glider(i[0], j[0])
+        elif self.tipo_insertar == dict_tipos["glider2"]:
+            print("glider2")
+            self.insertar_glider_dos(i[0], j[0])
+        elif self.tipo_insertar == dict_tipos["glider3"]:
+            print("glider3")
+            self.insertar_glider_tres(i[0], j[0])
+        elif self.tipo_insertar == dict_tipos["oscilador"]:
+            print("oscilador")
+            self.insertar_oscilador(i[0], j[0])
+
+        self.tipo_insertar = dict_tipos["nada"]
+
+    def insertar_cubo(self, x1, y1):
+        x2 = x1 + 1
+        y2 = y1 + 1
+        item1 = self.cuadritos[x1, y1]
+        item2 = self.cuadritos[x1, y2]
+        item3 = self.cuadritos[x2, y1]
+        item4 = self.cuadritos[x2, y2]
+
+        if self.celulas[x1, y1] == 0:
+            self.celulas[x1, y1] = 1
             self.contador += 1
+            self.canvas.itemconfig(item1, fill=self.unos)
+        if self.celulas[x1, y2] == 0:
+            self.celulas[x1, y2] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item2, fill=self.unos)
+        if self.celulas[x2, y1] == 0:
+            self.celulas[x2, y1] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item3, fill=self.unos)
+        if self.celulas[x2, y2] == 0:
+            self.celulas[x2, y2] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item4, fill=self.unos)
+
+    def insertar_oscilador(self, i1, j1):
+        i0 = i1 - 1
+        i2 = i1 + 1
+        item0 = self.cuadritos[i0, j1]
+        item1 = self.cuadritos[i1, j1]
+        item2 = self.cuadritos[i2, j1]
+
+        if self.celulas[i0, j1] == 0:
+            self.celulas[i0, j1] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item0, fill=self.unos)
+
+        if self.celulas[i1, j1] == 0:
+            self.celulas[i1, j1] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item1, fill=self.unos)
+
+        if self.celulas[i2, j1] == 0:
+            self.celulas[i2, j1] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item2, fill=self.unos)
+
 
     def re_dibujar(self):
         print("REDIBUJAR")
@@ -135,10 +220,49 @@ class Ventana(Frame):
 
         btn_save = Button(self, text="Guardar", command=self.guardar)
         btn_save.pack(side=TOP)
+
         btn_cargar = Button(self, text="Cargar Matriz", command=self.cargar)
         btn_cargar.pack(side=TOP)
 
-    def abrir_archivo(self):
+        self.cubo_image = PhotoImage(file="./data/cuadrado.png")
+        btn_cubo = Button(self, image=self.cubo_image, command=self.seleccionar_cubo)
+        btn_cubo.pack(side=TOP)
+
+        self.glider = PhotoImage(file="./data/glider.png")
+        self.glider = self.glider.subsample(2)
+        btn_glider = Button(self, image=self.glider, command=self.seleccionar_glider)
+        btn_glider.pack(side=TOP)
+
+        self.glider2 = PhotoImage(file="./data/glider2.png")
+        self.glider2 = self.glider2.subsample(2)
+        btn_glider2 = Button(self, image=self.glider2, command=self.seleccionar_glider_dos)
+        btn_glider2.pack(side=TOP)
+
+        self.glider3 = PhotoImage(file="./data/glider3.png")
+        btn_glider3 = Button(self, image=self.glider3, command=self.seleccionar_glider_tres)
+        btn_glider3.pack(side=TOP)
+
+        self.oscilador = PhotoImage(file="./data/oscilador.png")
+        btn_osilador = Button(self, image=self.oscilador, command=self.seleccionar_oscilador)
+        btn_osilador.pack(side=TOP)
+
+    def seleccionar_glider(self):
+        self.tipo_insertar = dict_tipos["glider"]
+
+    def seleccionar_glider_dos(self):
+        self.tipo_insertar = dict_tipos["glider2"]
+
+    def seleccionar_glider_tres(self):
+        self.tipo_insertar = dict_tipos["glider3"]
+
+    def seleccionar_oscilador(self):
+        self.tipo_insertar = dict_tipos["oscilador"]
+
+    def seleccionar_cubo(self):
+        self.tipo_insertar = dict_tipos["cubo"]
+
+    @staticmethod
+    def abrir_archivo():
         print("abrir archivo")
         ga = filedialog.askopenfilename(title="Selecciona un archivo",
                                         filetypes=(("CSV", "*.csv"), ("Archivo de texto", "*.txt"),
