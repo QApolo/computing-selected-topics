@@ -1,7 +1,9 @@
-from tkinter import Tk, Canvas, Frame, Button, Entry, Label, Scale
+from tkinter import Tk, Canvas, Frame, Button, Entry, Label, Scale, filedialog
 from tkinter import BOTH, TOP, LEFT, HORIZONTAL
 import numpy as np
 from tkcolorpicker import askcolor
+import datetime
+import time
 
 
 class Ventana(Frame):
@@ -28,11 +30,11 @@ class Ventana(Frame):
         self.celulas = np.random.randint(2, size=(self.tam, self.tam), dtype=int)
         self.tiempo = 0
         # Historial de unos
-        archivo = open("grafica.txt", "w")
-        archivo.close()
+        self.nom_archivo = None
 
     def iniciar(self):
-        archivo = open("grafica.txt", "w")
+        self.nom_archivo = "{}.csv".format(self.obtener_hora())
+        archivo = open(self.nom_archivo, "w")
         archivo.close()
         self.canvas.delete('all')
         self.update_idletasks()
@@ -54,6 +56,7 @@ class Ventana(Frame):
         self.regla[2] = int(texto[2])
         self.regla[3] = int(texto[3])
         self.contar_unos()
+        print(self.contador)
         self.re_dibujar()
 
     def contar_unos(self):
@@ -62,7 +65,7 @@ class Ventana(Frame):
                 if self.celulas[i, j] == 1:
                     self.contador += 1
 
-        print("contador_unos dos: {}".format(self.contador))
+        print("contador_unos : {}".format(self.contador))
 
     def pulsar_cuadrito(self, event):
         item = self.canvas.find_closest(event.x, event.y)[0]
@@ -70,9 +73,11 @@ class Ventana(Frame):
         if self.canvas.itemcget(item, "fill") == self.unos:
             self.canvas.itemconfig(item, fill=self.ceros)
             self.celulas[x[0]][y[0]] = 0
+            self.contador -= 1
         else:
             self.canvas.itemconfig(item, fill=self.unos)
             self.celulas[x[0]][y[0]] = 1
+            self.contador += 1
 
     def re_dibujar(self):
         print("REDIBUJAR")
@@ -94,12 +99,12 @@ class Ventana(Frame):
         self.canvas.tag_bind("btncuadrito", "<Button-1>", self.pulsar_cuadrito)
         self.update_idletasks()
 
-    def initUI(self):
+    def init_ui(self):
         self.parent.title("Juego de la vida")
-        self.pack(fill = BOTH, expand = 1)
+        self.pack(fill=BOTH, expand=1)
 
-        self.canvas = Canvas(self, relief ='raised', width = 1000, height = 1000)
-        self.canvas.pack(side = LEFT)
+        self.canvas = Canvas(self, relief='raised', width=1000, height=1000)
+        self.canvas.pack(side=LEFT)
 
         Label(self, text="Regla:").pack(side=TOP)
         self.e1 = Entry(self, fg="black", bg="white")
@@ -116,20 +121,29 @@ class Ventana(Frame):
         self.barra.set(50)
         self.barra.pack(side=TOP)
 
-        btnIniciar = Button(self, text="Iniciar/Reiniciar", command=self.iniciar)
-        btnIniciar.pack(side=TOP)
+        btn_iniciar = Button(self, text="Iniciar/Reiniciar", command=self.iniciar)
+        btn_iniciar.pack(side=TOP)
 
         button1 = Button(self, text="Pausa/Reanudar", command=self.empezar_dentener)
-        button1.pack(side = TOP)
+        button1.pack(side=TOP)
 
-        self.colorBtn1 = Button(self, text="Selecciona el color de unos", command=self.getColorUnos, bg=self.unos)
-        self.colorBtn1.pack(side = TOP)
+        self.colorBtn1 = Button(self, text="Selecciona el color de unos", command=self.get_color_unos, bg=self.unos)
+        self.colorBtn1.pack(side=TOP)
 
-        self.colorBtn2 = Button(self, text="Selecciona el color de ceros", command=self.getColorCeros, bg=self.ceros)
+        self.colorBtn2 = Button(self, text="Selecciona el color de ceros", command=self.get_color_ceros, bg=self.ceros)
         self.colorBtn2.pack(side=TOP)
 
-        btnSave = Button(self, text="Guardar", command=self.guardar)
-        btnSave.pack(side=TOP)
+        btn_save = Button(self, text="Guardar", command=self.guardar)
+        btn_save.pack(side=TOP)
+        btn_cargar = Button(self, text="Cargar Matriz", command=self.cargar)
+        btn_cargar.pack(side=TOP)
+
+    def abrir_archivo(self):
+        print("abrir archivo")
+        ga = filedialog.askopenfilename(title="Selecciona un archivo",
+                                        filetypes=(("CSV", "*.csv"), ("Archivo de texto", "*.txt"),
+                                                   ("Todos los archivos", "*.*")))
+        return ga
 
     def actualizar_color_matriz(self):
         for i in range(self.tam):
@@ -141,24 +155,23 @@ class Ventana(Frame):
 
         self.update_idletasks()
 
-    def getColorUnos(self):
+    def get_color_unos(self):
         color = askcolor()
-        if not color[1] == None:
+        if not color[1] is None:
             self.unos = color[1]
             self.colorBtn1.configure(bg=self.unos)
             self.actualizar_color_matriz()
 
-    def getColorCeros(self):
+    def get_color_ceros(self):
         color = askcolor()
-        if not color[1] == None:
+        if not color[1] is None:
             self.ceros = color[1]
             self.colorBtn2.configure(bg=self.ceros)
             self.actualizar_color_matriz()
 
     def guardar(self):
-        # np.savetxt("matriz.txt", self.celulas, fmt="%d")
-        archivo = open("matriz.txt", 'a')
-        archivo.write("tiempo={}\n".format(self.tiempo))
+        temp_nom = "respaldo-{}.csv".format(self.obtener_hora())
+        archivo = open(temp_nom, 'a')
         for i in range(self.tam):
             for j in range(self.tam):
                 archivo.write("{} ".format(self.celulas[i, j]))
@@ -168,18 +181,28 @@ class Ventana(Frame):
         archivo.close()
 
     def cargar(self):
-        self.celulas = np.loadtxt("prueba.txt", dtype=int)
+        print("Cargar archivo")
+        temp_archivo = self.abrir_archivo()
+        self.celulas = np.loadtxt(temp_archivo, dtype=int)
         self.canvas.delete('all')
+        self.nom_archivo = "{}.csv".format(self.obtener_hora())
+        archivo = open(self.nom_archivo, "w")
+        archivo.close()
+        texto = self.e1.get().split(",")
+        self.regla[0] = int(texto[0])
+        self.regla[1] = int(texto[1])
+        self.regla[2] = int(texto[2])
+        self.regla[3] = int(texto[3])
         self.tam = self.celulas.shape[0]
-        #self.celulas = np.random.randint(2, size=(self.tam, self.tam), dtype=int)
         self.cuadritos = np.zeros(shape=(self.tam, self.tam), dtype=int)
-        print(self.celulas)
-        print(self.tam)
-        self.canvas.configure(width=self.tam, height=self.tam)
-        # self.contar_unos()
+        self.tam_cuadro = 0
+        self.contador = 0
+        while self.tam_cuadro * self.tam < 1000:
+            self.tam_cuadro += 1
+        if self.tam_cuadro * self.tam > 1000:
+            self.tam_cuadro -= 1
+        self.contar_unos()
         self.re_dibujar()
-        self.update_idletasks()
-        self.update()
 
     def empezar_dentener(self):
         print("empezar_detener")
@@ -188,22 +211,20 @@ class Ventana(Frame):
 
     def animacion(self):
         if not self.pausa:
-            archivo = open("grafica.txt", "a")
+            archivo = open(self.nom_archivo, "a")
             archivo.write("{},{}\n".format(self.tiempo, self.contador))
             archivo.close()
             nueva_poblacion = self.celulas.copy()
             for i in range(self.tam):
                 for j in range(self.tam):
-                    vecinos = (self.celulas[i - 1, j - 1] + self.celulas[i - 1, j] + self.celulas[i - 1, (j + 1) % self.tam]
-                               + self.celulas[i, (j + 1) % self.tam] + self.celulas[(i + 1) % self.tam, (j + 1) % self.tam]
-                               + self.celulas[(i + 1) % self.tam, j] + self.celulas[(i + 1) % self.tam, j - 1] + self.celulas[i, j - 1])
+                    vecinos = self.revisar_vecinos(i, j)
                     if self.celulas[i, j] == 1:
                         if vecinos < self.regla[0] or vecinos > self.regla[1]:
                             nueva_poblacion[i, j] = 0
                             self.canvas.itemconfig(self.cuadritos[i][j], fill=self.ceros)
                             self.contador -= 1
                     else:
-                        if vecinos >= self.regla[2] and vecinos <= self.regla[3]:
+                        if self.regla[2] <= vecinos <= self.regla[3]:
                             nueva_poblacion[i, j] = 1
                             self.canvas.itemconfig(self.cuadritos[i][j], fill=self.unos)
                             self.contador += 1
@@ -212,14 +233,30 @@ class Ventana(Frame):
             self.update_idletasks()
             print("Termino el t={}".format(self.tiempo))
             self.tiempo += 1
-            self.after(100, self.animacion)
+            self.after(50, self.animacion)
+
+    def revisar_vecinos(self, i, j):
+        vecinos = self.celulas[i - 1, j - 1]
+        vecinos += self.celulas[i - 1, j]
+        vecinos += self.celulas[i - 1, (j + 1) % self.tam]
+        vecinos += self.celulas[i, (j + 1) % self.tam]
+        vecinos += self.celulas[(i + 1) % self.tam, (j + 1) % self.tam]
+        vecinos += self.celulas[(i + 1) % self.tam, j]
+        vecinos += self.celulas[(i + 1) % self.tam, j - 1]
+        vecinos += self.celulas[i, j - 1]
+        return vecinos
+
+    @staticmethod
+    def obtener_hora():
+        return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H:%M:%S')
+
 
 # 2 2 7 7
 def main():
     root = Tk()
     root.geometry('1360x750+0+0')
     app = Ventana(root)
-    app.initUI()
+    app.init_ui()
     app.mainloop()
 
 
