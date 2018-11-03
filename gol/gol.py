@@ -1,5 +1,5 @@
-from tkinter import Tk, Canvas, Frame, Button, Entry, Label, Scale, filedialog, PhotoImage
-from tkinter import BOTH, TOP, LEFT, HORIZONTAL
+from tkinter import Tk, Canvas, Frame, Button, Entry, Label, Scale, filedialog, PhotoImage, Scrollbar
+from tkinter import BOTH, TOP, LEFT, HORIZONTAL, Y, RIGHT, VERTICAL
 import numpy as np
 from tkcolorpicker import askcolor
 import datetime
@@ -20,6 +20,7 @@ class Ventana(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
+
         # Elementos interfaz
         self.ceros = "white"
         self.unos = "black"
@@ -366,7 +367,13 @@ class Ventana(Frame):
         self.pack(fill=BOTH, expand=1)
 
         self.canvas = Canvas(self, relief='raised', width=1000, height=1000)
+        scroll = Scrollbar(self, orient=VERTICAL)
+        scroll.pack(side=RIGHT, fill=Y)
+        scroll.config(command=self.canvas.yview)
+
+        self.canvas.config(yscrollcommand=scroll.set)
         self.canvas.pack(side=LEFT)
+
 
         Label(self, text="Regla:").pack(side=TOP)
         self.e1 = Entry(self, fg="black", bg="white")
