@@ -163,6 +163,183 @@ class Ventana(Frame):
             self.contador += 1
             self.canvas.itemconfig(item2, fill=self.unos)
 
+    def insertar_glider(self, i1, j1):
+        j2 = j1 + 1
+        i2 = i1 + 1
+        i3 = i2 + 1
+        i4 = i3 + 1
+
+        item1 = self.cuadritos[i1, j1]
+        item2 = self.cuadritos[i1, j2]
+        item3 = self.cuadritos[i2, j1]
+        item4 = self.cuadritos[i2, j2]
+        item5 = self.cuadritos[i3, j1]
+        item6 = self.cuadritos[i3, j2]
+        item7 = self.cuadritos[i4, j1]
+        item8 = self.cuadritos[i4, j2]
+
+        if self.celulas[i1, j1] == 0:
+            self.celulas[i1, j1] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item1, fill=self.unos)
+        if self.celulas[i1, j2] == 1:
+            self.celulas[i1, j2] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item2, fill=self.ceros)
+
+        if self.celulas[i2, j1] == 1:
+            self.celulas[i2, j1] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item3, fill=self.ceros)
+        if self.celulas[i2, j2] == 0:
+            self.celulas[i2, j2] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item4, fill=self.unos)
+
+        if self.celulas[i3, j1] == 1:
+            self.celulas[i3, j1] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item5, fill=self.ceros)
+        if self.celulas[i3, j2] == 0:
+            self.celulas[i3, j2] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item6, fill=self.unos)
+
+        if self.celulas[i4, j1] == 0:
+            self.celulas[i4, j1] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item7, fill=self.unos)
+        if self.celulas[i1, j2] == 1:
+            self.celulas[i1, j2] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item8, fill=self.ceros)
+
+    def insertar_glider_dos(self, i1, j1):
+        i2 = i1 + 1
+        i3 = i2 + 1
+        i4 = i3 + 1
+        j2 = j1 + 1
+        j3 = j2 + 1
+
+        item1 = self.cuadritos[i1, j1]
+        item2 = self.cuadritos[i1, j2]
+        item3 = self.cuadritos[i1, j3]
+        item4 = self.cuadritos[i2, j1]
+        item5 = self.cuadritos[i2, j2]
+        item6 = self.cuadritos[i2, j3]
+        item7 = self.cuadritos[i3, j1]
+        item8 = self.cuadritos[i3, j2]
+        item9 = self.cuadritos[i3, j3]
+        item10 = self.cuadritos[i4, j1]
+        item11 = self.cuadritos[i4, j2]
+        item12 = self.cuadritos[i4, j3]
+
+        if self.celulas[i1, j1] == 0:
+            self.celulas[i1, j1] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item1, fill=self.unos)
+        if self.celulas[i1, j2] == 1:
+            self.celulas[i1, j2] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item2, fill=self.ceros)
+        if self.celulas[i1, j3] == 1:
+            self.celulas[i1, j2] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item3, fill=self.ceros)
+
+        if self.celulas[i2, j1] == 1:
+            self.celulas[i2, j1] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item4, fill=self.ceros)
+        if self.celulas[i2, j2] == 1:
+            self.celulas[i2, j2] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item5, fill=self.ceros)
+        if self.celulas[i2, j3] == 0:
+            self.celulas[i2, j3] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item6, fill=self.unos)
+
+        if self.celulas[i3, j1] == 1:
+            self.celulas[i3, j1] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item7, fill=self.ceros)
+        if self.celulas[i3, j2] == 1:
+            self.celulas[i3, j2] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item8, fill=self.ceros)
+        if self.celulas[i3, j3] == 0:
+            self.celulas[i3, j3] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item9, fill=self.unos)
+
+        if self.celulas[i4, j1] == 0:
+            self.celulas[i4, j1] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item10, fill=self.unos)
+        if self.celulas[i4, j2] == 1:
+            self.celulas[i4, j2] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item11, fill=self.ceros)
+        if self.celulas[i4, j3] == 1:
+            self.celulas[i4, j3] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item12, fill=self.ceros)
+
+    def insertar_glider_tres(self, i2, j2):
+        i1 = i2 - 1
+        i3 = i2 + 1
+        j1 = j2 - 1
+        j3 = j2 + 1
+
+        item1 = self.cuadritos[i1, j1]
+        item2 = self.cuadritos[i1, j2]
+        item3 = self.cuadritos[i1, j3]
+        item4 = self.cuadritos[i2, j1]
+        item5 = self.cuadritos[i2, j2]
+        item6 = self.cuadritos[i2, j3]
+        item7 = self.cuadritos[i3, j1]
+        item8 = self.cuadritos[i3, j2]
+        item9 = self.cuadritos[i3, j3]
+
+        if self.celulas[i1, j1] == 1:
+            self.celulas[i1, j1] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item1, fill=self.ceros)
+        if self.celulas[i1, j2] == 0:
+            self.celulas[i1, j2] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item2, fill=self.unos)
+        if self.celulas[i1, j3] == 1:
+            self.celulas[i1, j2] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item3, fill=self.ceros)
+
+        if self.celulas[i2, j1] == 1:
+            self.celulas[i2, j1] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item4, fill=self.ceros)
+        if self.celulas[i2, j2] == 1:
+            self.celulas[i2, j2] = 0
+            self.contador -= 1
+            self.canvas.itemconfig(item5, fill=self.ceros)
+        if self.celulas[i2, j3] == 0:
+            self.celulas[i2, j3] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item6, fill=self.unos)
+
+        if self.celulas[i3, j1] == 0:
+            self.celulas[i3, j1] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item7, fill=self.unos)
+        if self.celulas[i3, j2] == 0:
+            self.celulas[i3, j2] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item8, fill=self.unos)
+        if self.celulas[i3, j3] == 0:
+            self.celulas[i3, j3] = 1
+            self.contador += 1
+            self.canvas.itemconfig(item9, fill=self.unos)
 
     def re_dibujar(self):
         print("REDIBUJAR")
