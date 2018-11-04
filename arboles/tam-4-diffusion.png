@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Server Error - Wolfram Cloud</title>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            font-family: Helvetica, Arial, sans-serif;
+            background : #f5f5f5;
+        }
+        header, main {
+            display: block;
+        }
+        .error-header-icon {
+            display: block;
+            margin-right: 18px;
+        }
+        main {
+            width: 325px;
+            top: 28.3%;
+            position: relative;
+            margin: 0 auto;
+            padding-bottom: 80px;
+            text-align: center;
+        }
+        .error-img {
+            margin-bottom: 48px;
+        }
+        .error-msgblock {
+            margin-bottom: 40px;
+        }
+        .error-msgblock p {
+            font-weight: 400;
+            color: #333333;
+            font-size: 16px;
+        }
+        .error-msgblock a, .error-msgblock a:visited {
+            font-size: 12px ;
+            cursor: pointer;
+            color: #dd1100;
+            text-decoration: none;
+        }
+        .error-msgblock a:hover {
+            font-size: 12px;
+            color: #fe0000;
+        }
+        p.mainMsg {
+            margin: 0;
+        }
+        p.subMsg {
+            font-size: 12px;
+            color: #646464;
+            margin: 20px 0 40px;
+        }
+        /* duplicate-ish footer styles from Footer.mod.scss */
+        .cloudFooter {
+            padding: 25px 0;
+            width: 100%;
+            bottom: 0;
+            position: fixed;
+            color: #646464;
+            background : #f5f5f5;
+            font: 12px "Source Sans Pro", Arial, Helvetica, sans-serif;
+            line-height: 1;
+        }
+        .linkWrap {
+            margin: 0 auto;
+            text-align: center;
+        }
+        .copyRight,
+        .cloudFooterSection {
+            display: inline-block;
+            padding: 0 5px;
+            text-decoration: none;
+            outline: 0;
+        }
+        .copyRight a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .copyRight a:hover {
+            color: #fe0000;
+        }
+        .cloudFooterSection {
+            border-left: 1px solid #bfbfbf;
+            color: inherit;
+        }
+        .cloudFooterSection:hover {
+            color: #fe0000;
+        }
+        @media (max-height: 800px) {
+            main { top: 12%; }
+            .error-img, p.subMsg, .error-msgblock { margin-bottom: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="http://wolframcloud.com" target="_blank" rel="noopener noreferrer"><img class="error-header-icon" src="/images/errorPages/500header.svg" width="419" height="44" /></a>
+</header>
+<main class="error500">
+    <img class="error-img" src="/images/errorPages/500_wrenches.svg" width="196" height="118" alt="There appears to be a wrench in the system."/>
+    <div class="error-msgblock">
+        <p class="mainMsg">We're sorry, the server encountered a problem and could not process your request.</p>
+        <p class="subMsg">Try <a id="refresh">refreshing</a> the page. If the problem persists, please <a href="http://www.wolfram.com/support/contact/email">report</a> this error and the conditions that caused it.</p>
+    </div>
+</main>
+<footer class="cloudFooter">
+    <div class="linkWrap">
+        <span class="copyRight">&copy; <span id="copyYear"></span>&nbsp;
+            <a target="_blank" rel="noopener noreferrer" href="http://wolfram.com" >Wolfram Research, Inc.</a>
+        </span>
+        <a target="_blank" rel="noopener noreferrer" class="cloudFooterSection" href="http://wolfram.com/legal/terms/wolfram-cloud.html"
+        >Terms</a>
+        <a target="_blank" rel="noopener noreferrer" class="cloudFooterSection" href="http://wolfram.com/legal/privacy/wolfram-cloud.html"
+        >Privacy</a>
+        <a target="_blank" rel="noopener noreferrer" class="cloudFooterSection" href="http://www.wolfram.com/support/contact/email/"
+        >Support</a>
+    </div>
+</footer>
+
+<script type="text/javascript">
+    var hostName = window.location.hostname;
+    var isOpenCloud = hostName.indexOf('open.') > -1;
+    var product = hostName.replace('.devel3.', '.').replace('.devel.open.', '.').replace('.test.open.', '.').replace('.devel.', '.').replace('.test.', '.').replace('.test2.', '.').replace('.open.', '.').replace('.local.', '.');
+    product = product.split('.')[0];
+    var pageTitle = 'Server Error - Wolfram Cloud';
+
+    switch (product) {
+        case 'sandbox':
+            pageTitle = isOpenCloud ? 'Server Error - Wolfram Open Cloud' : 'Server Error - Wolfram Cloud';
+            break;
+        case 'mathematica':
+            pageTitle = 'Server Error - Mathematica Online';
+            break;
+        case 'lab':
+            pageTitle = 'Server Error - Wolfram Programming Lab';
+            break;
+        case 'develop':
+            pageTitle = 'Server Error - Wolfram Development Platform';
+            break;
+        case 'datascience':
+            pageTitle = 'Server Error - Wolfram Data Science Platform';
+            break;
+        case 'one':
+            pageTitle = 'Server Error - Wolfram|One';
+            break;
+        default:
+            pageTitle = isOpenCloud ? 'Server Error - Wolfram Open Cloud' : 'Server Error - Wolfram Cloud';
+    }
+    document.title = pageTitle;
+
+    var refreshBtn = document.getElementById('refresh');
+    refreshBtn.addEventListener('click', function () {
+        location.reload(true);
+    });
+
+    // copyright date in footer
+    var copyYear = new Date().getFullYear();
+    document.getElementById('copyYear').innerHTML = copyYear;
+</script>
+
+</body>
+</html>
+
