@@ -1,6 +1,8 @@
 \section{Árboles}
 \subsection{Introducción}
+Este programa se encarga de generar los árboles que se crean con la regla de life y la regla de difusión una matriz de 2x2 hasta 7x7, sin embargo en este caso solo se alcanzo hasta 4x4. El programa fue desarrollado en Python especificamente para Windows 10 ya que los archivos que se generan solo funcionan en Windows ya que se trabajo con la versión de WolframScript para este sistema operativo.
 
+Al ejecutar el programa se obtienen los scripts necesarios para crear las imagenes de cada matriz, cada script se debe de ejecutar para poder producir la imagen del árbol, tambien se realizo una página web sencilla para poder comparar los grafos de cada regla.
 \subsection{Desarrollo}
 Archivo: arboles.py
 En este archivo se encuentra el código responsable de generar todas las transiciones entre todas las configuraciones de cada matriz para la regla de life o la regla de difusión, además genera los script de Windows y scripts de Wolfram necesarios para conectarse a Wolfram cloud y obtener las imágenes de los árboles.
@@ -134,7 +136,7 @@ Las pruebas se realizaron hasta una matriz de 4x4, sin embargo este tamaño de m
 
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=12cm, height=10cm]{./img/tam-2-life.png}
+ \includegraphics[width=12cm, height=12cm]{./img/tam-2-life.png}
  \caption{Árboles generados en una matriz de 2x2 con la regla de life}
  \label{fig:life2}
 \end{center}
