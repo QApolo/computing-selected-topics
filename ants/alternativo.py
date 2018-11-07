@@ -13,8 +13,10 @@ class Ventana(Frame):
         self.canvas = None
         self.input_tam = None
         self.barra = None
+        self.barra_normal = None
+        self.barra_soldado = None
+        self.barra_reina = None
 
-        # Elementos de control
         self.tiempo_vida = 50
         self.cuadros = None
         self.matriz = None
@@ -32,6 +34,7 @@ class Ventana(Frame):
         self.contador = [0, 0, 0]
         self.nom_archivo = "{}.csv".format(self.obtener_hora())
         self.archivo = None
+        self.probabilidades = [.9, .08, .02]
 
     def init_ui(self):
         self.parent.title("Hormiga de Lagnton")
@@ -68,6 +71,21 @@ class Ventana(Frame):
         self.radio1.select()
         self.radio2.deselect()
         self.radio3.deselect()
+
+        Label(self, text="Probabilidad de horigas normales:", font=(20,)).pack(side=tk.TOP)
+        self.barra_normal = Scale(self, from_=0, to=100, orient=tk.HORIZONTAL, tickinterval=50)
+        self.barra_normal.set(90)
+        self.barra_normal.pack(side=tk.TOP)
+
+        Label(self, text="Probabilidad de horigas soldado:", font=(20,)).pack(side=tk.TOP)
+        self.barra_soldado = Scale(self, from_=0, to=100, orient=tk.HORIZONTAL, tickinterval=50)
+        self.barra_soldado.set(8)
+        self.barra_soldado.pack(side=tk.TOP)
+
+        Label(self, text="Probabilidad de horigas reina:", font=(20,)).pack(side=tk.TOP)
+        self.barra_reina = Scale(self, from_=0, to=100, orient=tk.HORIZONTAL, tickinterval=50)
+        self.barra_reina.set(2)
+        self.barra_reina.pack(side=tk.TOP)
 
         btn_iniciar = Button(self, text="Iniciar/Reiniciar", command=self.iniciar, font=(20,))
         btn_iniciar.pack(side=tk.TOP)
@@ -110,7 +128,7 @@ class Ventana(Frame):
         print(str(self.mi_var.get()))
 
     def crear_hormiga(self, j, i):
-        tipo = np.random.choice([1, 2, 3], p=[.9, .08, .02])
+        tipo = np.random.choice([1, 2, 3], p=self.probabilidades)
         if tipo == 1:
             hormiga = Hormiga(j, i, self.tam)
             self.contador[0] += 1
@@ -203,18 +221,14 @@ class Ventana(Frame):
             soldados = list()
             cont = 0
             for hormiga in self.hormigas:
-                if hormiga.tipo == tipos_dict["reina"] and (hormiga.orientacion == "N" or hormiga.orientacion == "E"):
+                if hormiga.tipo == tipos_dict["reina"]:
                     reinas.append(cont)
-                elif hormiga.tipo == tipos_dict["soldado"] and (hormiga.orientacion == "N"
-                                                                or hormiga.orientacion == "E"):
+                elif hormiga.tipo == tipos_dict["soldado"]:
                     soldados.append(cont)
                 cont += 1
             for i in reinas:
                 for j in soldados:
                     if self.hormigas[i].x == self.hormigas[j].x and self.hormigas[i].y == self.hormigas[j].y:
-                        if self.hormigas[i].orientacion == "N" and self.hormigas[j].orientacion == "E":
-                            self.hormigas.append(self.crear_hormiga(self.hormigas[i].x, self.hormigas[i].y))
-                        elif self.hormigas[i].orientacion == "E" and self.hormigas[j].orientacion == "N":
                             self.hormigas.append(self.crear_hormiga(self.hormigas[i].x, self.hormigas[i].y))
 
             conjunto = set()
