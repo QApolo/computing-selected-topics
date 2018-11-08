@@ -118,6 +118,9 @@ class Ventana(Frame):
             self.tam_cuadro -= 1
 
         self.distribucion = self.barra.get() / 100
+        self.probabilidades[0] = self.barra_normal.get() / 100
+        self.probabilidades[1] = self.barra_soldado.get() / 100
+        self.probabilidades[2] = self.barra_reina.get() / 100
 
         self.pausa = True
         self.cuadros = np.zeros(shape=(self.tam, self.tam), dtype=int)
