@@ -67,7 +67,7 @@ class Ventana(Frame):
             self.tam_cuadro -= 1
         self.distribucion = self.barra.get()/100
         self.celulas = np.random.choice([1, 0], size=(self.tam, self.tam), 
-            p=[self.distribucion, 1-self.distribucion])
+                                        p=[self.distribucion, 1-self.distribucion])
         self.cuadritos = np.zeros(shape=(self.tam, self.tam), dtype=int)
         texto = self.e1.get().split(",")
         self.regla[0] = int(texto[0])
@@ -374,7 +374,6 @@ class Ventana(Frame):
         self.canvas.config(yscrollcommand=scroll.set)
         self.canvas.pack(side=LEFT)
 
-
         Label(self, text="Regla:").pack(side=TOP)
         self.e1 = Entry(self, fg="black", bg="white")
         self.e1.insert(10, "2,3,3,3")
@@ -559,7 +558,6 @@ class Ventana(Frame):
         return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H:%M:%S')
 
 
-# 2 2 7 7
 def main():
     root = Tk()
     root.geometry('1360x750+0+0')

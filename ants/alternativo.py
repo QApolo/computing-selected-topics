@@ -1,4 +1,4 @@
-from tkinter import Tk, Frame, Canvas, Button, Label, Entry, Scale, Scrollbar, Radiobutton, IntVar
+from tkinter import Tk, Frame, Canvas, Button, Label, Entry, Spinbox, Scrollbar, Radiobutton, IntVar, Scale, StringVar
 import tkinter as tk
 import numpy as np
 from hormiga import Soldado, Hormiga, Reina, colores_dict, tipos_dict
@@ -16,6 +16,7 @@ class Ventana(Frame):
         self.barra_normal = None
         self.barra_soldado = None
         self.barra_reina = None
+        self.label_probabilidades = None
 
         self.tiempo_vida = 50
         self.cuadros = None
@@ -72,19 +73,25 @@ class Ventana(Frame):
         self.radio2.deselect()
         self.radio3.deselect()
 
-        Label(self, text="Probabilidad de horigas normales:", font=(20,)).pack(side=tk.TOP)
-        self.barra_normal = Scale(self, from_=0, to=100, orient=tk.HORIZONTAL, tickinterval=50)
-        self.barra_normal.set(90)
+        self.label_probabilidades = Label(self, text="Suma de probailidades: 100%", font=(20,))
+        self.label_probabilidades.pack(side=tk.TOP)
+
+        Label(self, text="Probabilidad de hormigas normales:", font=(20,)).pack(side=tk.TOP)
+        valor1 = StringVar(self)
+        valor1.set("90")
+        self.barra_normal = Spinbox(self, from_=0, to=100, command=self.mover_spinner, textvariable=valor1)
         self.barra_normal.pack(side=tk.TOP)
 
-        Label(self, text="Probabilidad de horigas soldado:", font=(20,)).pack(side=tk.TOP)
-        self.barra_soldado = Scale(self, from_=0, to=100, orient=tk.HORIZONTAL, tickinterval=50)
-        self.barra_soldado.set(8)
+        Label(self, text="Probabilidad de hormigas soldado:", font=(20,)).pack(side=tk.TOP)
+        valor2 = StringVar(self)
+        valor2.set("8")
+        self.barra_soldado = Spinbox(self, from_=0, to=100, command=self.mover_spinner, textvariable=valor2)
         self.barra_soldado.pack(side=tk.TOP)
 
-        Label(self, text="Probabilidad de horigas reina:", font=(20,)).pack(side=tk.TOP)
-        self.barra_reina = Scale(self, from_=0, to=100, orient=tk.HORIZONTAL, tickinterval=50)
-        self.barra_reina.set(2)
+        Label(self, text="Probabilidad de hormigas reina:", font=(20,)).pack(side=tk.TOP)
+        valor3 = StringVar(self)
+        valor3.set("2")
+        self.barra_reina = Spinbox(self, from_=0, to=100, command=self.mover_spinner, textvariable=valor3)
         self.barra_reina.pack(side=tk.TOP)
 
         btn_iniciar = Button(self, text="Iniciar/Reiniciar", command=self.iniciar, font=(20,))
@@ -98,6 +105,18 @@ class Ventana(Frame):
         Label(self, text="Arriba", bg="red", font=(20,)).pack(side=tk.TOP)
         Label(self, text="Izquierda", bg="green", font=(20,)).pack(side=tk.TOP)
         Label(self, text="Derecha", bg="yellow", fg="black", font=(20,)).pack(side=tk.TOP)
+
+    def mover_spinner(self):
+        print("moviendo normal")
+        aux1 = int(self.barra_normal.get())
+        aux2 = int(self.barra_soldado.get())
+        aux3 = int(self.barra_reina.get())
+        self.probabilidades[0] = aux1 / 100
+        self.probabilidades[1] = aux2 / 100
+        self.probabilidades[2] = aux3 / 100
+        valor = aux1 + aux2 + aux3
+        texto = "Suma de probabilidades {} %".format(valor)
+        self.label_probabilidades.configure(text=texto)
 
     def iniciar(self):
         print("iniciar")
@@ -118,9 +137,9 @@ class Ventana(Frame):
             self.tam_cuadro -= 1
 
         self.distribucion = self.barra.get() / 100
-        self.probabilidades[0] = self.barra_normal.get() / 100
-        self.probabilidades[1] = self.barra_soldado.get() / 100
-        self.probabilidades[2] = self.barra_reina.get() / 100
+        self.probabilidades[0] = int(self.barra_normal.get()) / 100
+        self.probabilidades[1] = int(self.barra_soldado.get()) / 100
+        self.probabilidades[2] = int(self.barra_reina.get()) / 100
 
         self.pausa = True
         self.cuadros = np.zeros(shape=(self.tam, self.tam), dtype=int)

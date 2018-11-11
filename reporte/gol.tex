@@ -1,6 +1,18 @@
-\section{Juego de la Vida}
+\section{Autómata celular (Regla de life y difusión)}
+Los autómatas celulares(AC) surgen en la década de 1940 con John Von Neumann, que intentaba modelar una máquina que fuera capaz de auto-replicarse, llegando así a un modelo matemático de dicha maquina con reglas complicadas sobre una red rectangular. Inicialmente fueron interpretados como conjunto de células que crecían, se reproducían y morían a medida que pasaba el tiempo. A esta similitud con el crecimiento de las células se le debe su nombre.\cite{PAGINA}
+
+Un autómata celular se caracteriza por contar con los siguientes elementos:
+\begin{enumerate}
+ \item Arreglo regular. Ya sea un plano de dos dimensiones o un espacio n-dimensional, este es el espacio de evoluciones, y cada división homogénea del arreglo es llamada célula.
+ \item Conjunto de estados. Es finito y cada elemento o célula del arreglo toma un valor de este conjunto de estados. También se denomina alfabeto. Puede ser expresado en valores o colores.
+ \item configuración inicial. Consiste en asignar un estado a cada una de las células del espacio de evolución inicial del sistema.
+ \item Vecindades. Define el conjunto contiguo de células y posición relativa respecto a cada una de ellas. A cada vecindad diferente corresponde un elemento del conjunto de estados.
+ \item Función local. Es la regla de evolución que determina el comportamiento del A. C. Se conforma de una célula central y sus vecindades. Define como debe cambiar de estado cada célula dependiendo de los estados anteriores de sus vecindades. Puede ser una expresión algebraica o un grupo de ecuaciones.
+\end{enumerate}
+
 \subsection{Introducción}
-Este programa implementa el Juego de la Vida de Conway con la siguiente funcionalidad. Los puntos importantes a señalar son que cuenta con una interfaz gráfica para el usuario en la cual aparecen los unos (célula viva) y ceros (célula muerta) que son el principal elemento en este autómata celular y que son representados como pequeños cuadros que cambian su tamaño de acuerdo a la población que se tenga.
+\subsection{Planteamiento de la práctica}
+Este programa implementar la simulación de un autómata celular. Los puntos importantes a señalar son que cuenta con una interfaz gráfica para el usuario en la cual aparecen los unos (célula viva) y ceros (célula muerta) que son el principal elemento en este autómata celular y que son representados como pequeños cuadros que cambian su tamaño de acuerdo a la población que se tenga. Las características de este simulador son las siguientes:
 \begin{itemize}
  \item Permitir seleccionar el tamaño de la población de la matriz de unos y ceros.
  \item Permitir seleccionar la regla que se utilizara en cada iteración de la simulación.
@@ -9,7 +21,7 @@ Este programa implementa el Juego de la Vida de Conway con la siguiente funciona
  \item Permitir guardar la matriz que se esta trabajando en un archivo de texto.
  \item Se mostrara el cambio de unos que hay a lo largo de cada iteración.
 \end{itemize}
-El objetivo que se tiene es mostrar una matriz de 1000 por 1000 para poder observar un comportamiento que nos proporcione información.
+El objetivo que se tiene es mostrar una matriz de hasta 1000 por 1000 para poder observar un comportamiento que nos proporcione información.
 
 \subsection{Desarrollo}
 Archivo: gol.py
@@ -309,18 +321,13 @@ plt.show()
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=8cm, height=13cm]{./img/matriz.png}
- \caption{Matriz que se guarda en tiempo=0 y tiempo=23}
+ \caption{Matriz que se guarda}
  \label{fig:matriz}
 \end{center}
 \end{figure}
 
-\begin{figure}[H]
-\begin{center}
- \includegraphics[width=13cm, height=6cm]{./img/unos_777.png}
- \caption{Gráfica que muestra el histórico de unos con la regla 7722}
- \label{fig:grafica_unos}
-\end{center}
-\end{figure}
+\subsubsection{Análisis de poblaciones}
+En esta parte se hicieron pruebas con la regla de life y difusión aumentando la densidad de la población de 10 en 10 por ciento hasta llegar al máximo de 100 por ciento, las pruebas de realizaron tras 500 generaciones en una matriz de 100 por 100.
 
 \subsection{Conclusiones}
 Al hacer y probar este programa se pudieron solucionar dos cuestiones, la primera es si existe una configuración el la cual el numero de células no se termine, y la respuesta a esto es que exista un oscilador el cual cambia su posición a lo largo del tiempo, otra posible opción es que haya figuras como un bloque formado por 4 cuadros en el cual no hay cambios.
