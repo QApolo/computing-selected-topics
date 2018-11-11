@@ -1,13 +1,89 @@
 [General]
 kile_livePreviewEnabled=true
-kile_livePreviewStatusUserSpecified=false
+kile_livePreviewStatusUserSpecified=true
 kile_livePreviewTool=LivePreview-PDFLaTeX
-lastDocument=
+lastDocument=gol.tex
+
+[document-settings,item:gol.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+
+[document-settings,item:main.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+
+[document-settings,item:maquina.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+
+[document-settings,item:reporte.bib]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=BibTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=BibTeX
+Mode Set By User=false
+
+[item:gol.tex]
+open=true
+order=1
 
 [item:main.tex]
 open=true
+order=0
+
+[item:maquina.tex]
+open=false
+order=-1
+
+[item:reporte.bib]
+open=false
 order=-1
 
 [item:reporte.kilepr]
 open=false
 order=-1
+
+[view-settings,view=0,item:gol.tex]
+CursorColumn=211
+CursorLine=329
+JumpList=
+TextFolding=[{"endColumn":14,"endLine":10,"flags":2,"startColumn":0,"startLine":4},{"endColumn":12,"endLine":22,"flags":2,"startColumn":0,"startLine":15},{"endColumn":15,"endLine":264,"flags":2,"startColumn":0,"startLine":28},{"endColumn":15,"endLine":292,"flags":2,"startColumn":0,"startLine":268}]
+ViMarks=.,329,210,[,329,204,],329,210
+
+[view-settings,view=0,item:main.tex]
+CursorColumn=0
+CursorLine=47
+JumpList=
+TextFolding=[]
+ViMarks=.,47,0,[,47,0,],47,0
+
+[view-settings,view=0,item:maquina.tex]
+CursorColumn=0
+CursorLine=64
+JumpList=
+TextFolding=[]
+ViMarks=.,0,0,[,0,0,],0,0
+
+[view-settings,view=0,item:reporte.bib]
+CursorColumn=27
+CursorLine=7
+JumpList=
+TextFolding=[]
+ViMarks=.,7,26,[,7,23,],7,26

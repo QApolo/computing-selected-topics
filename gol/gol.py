@@ -385,7 +385,7 @@ class Ventana(Frame):
         self.e2.pack(side=TOP)
 
         Label(self, text="Porcentaje de unos").pack(side=TOP)
-        self.barra = Scale(self, from_=0, to=100, orient=HORIZONTAL, tickinterval=50)
+        self.barra = Scale(self, from_=0, to=100, orient=HORIZONTAL, tickinterval=50, length=200)
         self.barra.set(50)
         self.barra.pack(side=TOP)
 
@@ -538,7 +538,7 @@ class Ventana(Frame):
 
             self.celulas[:] = nueva_poblacion[:]
             self.update_idletasks()
-            print("Termino el t={}".format(self.tiempo))
+            #print("Termino el t={}".format(self.tiempo))
             self.tiempo += 1
             self.after(50, self.animacion)
 
