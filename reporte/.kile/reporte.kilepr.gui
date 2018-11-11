@@ -1,8 +1,8 @@
 [General]
-kile_livePreviewEnabled=true
+kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=true
 kile_livePreviewTool=LivePreview-PDFLaTeX
-lastDocument=gol.tex
+lastDocument=main.tex
 
 [document-settings,item:gol.tex]
 Bookmarks=
@@ -41,7 +41,7 @@ Mode=BibTeX
 Mode Set By User=false
 
 [item:gol.tex]
-open=true
+open=false
 order=1
 
 [item:main.tex]
@@ -61,18 +61,18 @@ open=false
 order=-1
 
 [view-settings,view=0,item:gol.tex]
-CursorColumn=211
-CursorLine=329
+CursorColumn=384
+CursorLine=627
 JumpList=
-TextFolding=[{"endColumn":14,"endLine":10,"flags":2,"startColumn":0,"startLine":4},{"endColumn":12,"endLine":22,"flags":2,"startColumn":0,"startLine":15},{"endColumn":15,"endLine":264,"flags":2,"startColumn":0,"startLine":28},{"endColumn":15,"endLine":292,"flags":2,"startColumn":0,"startLine":268}]
-ViMarks=.,329,210,[,329,204,],329,210
+TextFolding=[{"endColumn":14,"endLine":10,"flags":2,"startColumn":0,"startLine":4},{"endColumn":12,"endLine":22,"flags":2,"startColumn":0,"startLine":15},{"endColumn":11,"endLine":336,"flags":2,"startColumn":0,"startLine":330},{"endColumn":11,"endLine":352,"flags":2,"startColumn":0,"startLine":346},{"endColumn":11,"endLine":368,"flags":2,"startColumn":0,"startLine":362},{"endColumn":11,"endLine":384,"flags":2,"startColumn":0,"startLine":378},{"endColumn":11,"endLine":400,"flags":2,"startColumn":0,"startLine":394},{"endColumn":11,"endLine":416,"flags":2,"startColumn":0,"startLine":410},{"endColumn":11,"endLine":432,"flags":2,"startColumn":0,"startLine":426},{"endColumn":11,"endLine":448,"flags":2,"startColumn":0,"startLine":442}]
+ViMarks=.,627,383,[,627,349,],627,383
 
 [view-settings,view=0,item:main.tex]
 CursorColumn=0
-CursorLine=47
+CursorLine=35
 JumpList=
 TextFolding=[]
-ViMarks=.,47,0,[,47,0,],47,0
+ViMarks=.,40,16,[,40,16,],40,16
 
 [view-settings,view=0,item:maquina.tex]
 CursorColumn=0
