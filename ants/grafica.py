@@ -8,6 +8,7 @@ fig.add_axes()
 ax1 = fig.add_subplot(1, 1, 1)
 archivo = sys.argv[1]
 
+
 def animacion(i, *args):
     info = open(args[0], "r").read()
     lineas = info.split("\n")
