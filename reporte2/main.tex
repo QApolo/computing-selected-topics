@@ -7,12 +7,12 @@
 \usepackage{color}
 \usepackage[spanish]{babel}
 \usepackage[nottoc,notlot,notlof]{tocbibind} % Hace que se agregen las referencias al indice
-
+ 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
+ 
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -31,8 +31,9 @@
     showtabs=false,                  
     tabsize=2
 }
-
+ 
 \lstset{style=mystyle}
+
 %opening
 \title{Entrega de trabajos del segundo parcial}
 \author{Barrera Pérez Carlos Tonatihu \\ Profesor: Genaro Juárez Martínez \\ Computing Selected Topics \\ Grupo: 3CM8 }
@@ -43,7 +44,11 @@
 \tableofcontents
 \newpage
 
-\include{gol}
+\include{gol2}
 \include{arboles}
+\include{langton}
+
+\bibliographystyle{ieeetr}
+\bibliography{reporte}
 
 \end{document}

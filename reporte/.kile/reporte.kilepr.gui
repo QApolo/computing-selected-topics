@@ -45,7 +45,7 @@ open=false
 order=1
 
 [item:main.tex]
-open=true
+open=false
 order=0
 
 [item:maquina.tex]
@@ -68,8 +68,8 @@ TextFolding=[{"endColumn":14,"endLine":10,"flags":2,"startColumn":0,"startLine":
 ViMarks=.,627,383,[,627,349,],627,383
 
 [view-settings,view=0,item:main.tex]
-CursorColumn=0
-CursorLine=35
+CursorColumn=12
+CursorLine=31
 JumpList=
 TextFolding=[]
 ViMarks=.,40,16,[,40,16,],40,16
