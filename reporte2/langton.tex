@@ -1,6 +1,6 @@
 \section{Hormiga de Langton}
 \subsection{Introducción}
-La hormiga de Langton es un autómata celular desarrollado por Chris Langton en 1968, Langton se inspiro en la bioquímica, exploró la posibilidad de implementar la lógica molecular del estado viviente generando así una bioquimica artificial basada en la interacción entre moléculas artificiales. Langton dijo que el comportamiento global de una sociedad es un fenómeno emergente que surge de todas las interacciones locales de sus miembros. 
+La hormiga de Langton es un autómata celular desarrollado por Chris Langton en 1968, Langton se inspiro en la bioquímica, exploró la posibilidad de implementar la lógica molecular del estado viviente generando así una bioquímica artificial basada en la interacción entre moléculas artificiales. Langton dijo que el comportamiento global de una sociedad es un fenómeno emergente que surge de todas las interacciones locales de sus miembros. 
 
 El comportamiento complejo puede surgir de la interacción de las partes muy simples. Por lo que utilizo una colonia de hormigas como modelo para una forma variante de un autómata celular, en donde cada célula puede cambiar de estado, en virtud de los estados de las otras células. \cite{LANGTON}
 
@@ -24,7 +24,29 @@ De esta forma la hormiga deja un "rastro" a medida que se mueve.
 \subsection{Práctica a realizar}
 En esta práctica se trabajaron dos versiones diferentes de la hormiga de Langton, la primera que es la implementación clásica de este autómata celular y la segunda versión en la cual se cuenta con tres tipos de hormigas y de restricciones que modifican el comportamiento del autómata original. Es importante señalar que ambas versiones tienen funcionalidades diferentes como el poder graficar y manipular de forma particular la simulación.
 \subsubsection{Hormiga de Langton original}
+Las principales características de esta versión es la posibilidad de insertar hormigas por parte del usuario en la posición que se desee además de poder cambiar el color del camino generado por la hormiga. Para poder apreciar de una forma más clara el comportamiento de la hormiga los movimientos que se realizan tienen un color realizado.
+
+\begin{itemize}
+ \item Si la hormiga esta viendo hacia abajo el color de la hormiga es azul.
+ \item El color sera rojo si la hormiga se encuentra viendo hacia arriba.
+ \item Para la izquierda se tiene el color verde.
+ \item Y para la derecha el color asociado sera el amarillo.
+\end{itemize}
+
+Finalmente, se tiene la posibilidad de generar una cantidad de hormigas basada en una probabilidad de nacimiento, por lo que cada hormiga que se genera tendrá un color diferente. Es importante señalar que el tamaño del espacio en donde se trabaja puede cambiar y las dimensiones de cada célula se ajustan al tamaño del espacio.
+
 \subsubsection{Hormiga de Langton modificada}
+Esta versión modificada tiene todo la funcionalidad de la versión con excepción de que cada hormiga tenga un color diferente, en este caso los colores generados por las hormigas depende del tipo de hormiga del que se trate. Para las hormigas normales el color asociado es el blanco, para las soldado sera el naranja y para las reinas sera el morado.
+
+El comportamiento es el mismo que en la versión clásica, sin embargo se tienen las siguientes restricciones:
+\begin{itemize}
+ \item Las hormigas tienen un tiempo de vida de 100 iteraciones, posterior a esto mueren.
+ \item Cada tipo de hormiga tiene una probabilidad de nacimiento asociada, los valores por defecto son 90\% para las normales, 8\% para las soldado y 2\% para las reinas.
+ \item También se tiene la posibilidad de cambiar estos valores en la interfaz.
+ \item Si una hormiga reina y una soldado se encuentran, se reproducen y nace una nueva hormiga dependiendo de las probabilidades anteriores.
+ \item Se tiene un programa para poder visualizar la población de hormigas separando por tipo de hormiga.
+\end{itemize}
+
 
 \subsection{Desarrollo}
 El programa fue desarrollado en Python 3 utilizando la biblioteca para desarrollar interfaces Tkinter y la biblioteca para graficar llamada matplotlib junto al uso de numpy que es una biblioteca que permite manipular matrices de una forma sencilla.
@@ -670,7 +692,93 @@ plt.show()
 
 \subsection{Pruebas}
 \subsubsection{Hormiga de Langton original}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=7cm]{img/original1.png}
+ % ant.jpg: 320x276 px, 72dpi, 11.29x9.74 cm, bb=0 0 320 276
+ \caption{Dos hormigas insertadas por el usuario y con colores diferentes, en un espacio de 100x100}
+ \label{fig:original1}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=7cm]{img/original2.png}
+ % ant.jpg: 320x276 px, 72dpi, 11.29x9.74 cm, bb=0 0 320 276
+ \caption{Varias hormigas generadas aleatoriamente en un espacio de 100x100}
+ \label{fig:origina2}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=7cm]{img/original3.png}
+ % ant.jpg: 320x276 px, 72dpi, 11.29x9.74 cm, bb=0 0 320 276
+ \caption{Hormiga que se mueve al ``infinito'' después de varias iteraciones en un espacio de 400x400}
+ \label{fig:original3}
+\end{center}
+\end{figure}
+
 \subsubsection{Hormiga de Langton modificada}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=7cm]{img/modificado1.png}
+ % ant.jpg: 320x276 px, 72dpi, 11.29x9.74 cm, bb=0 0 320 276
+ \caption{Probabilidad por defecto}
+ \label{fig:modificado1}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=7cm]{img/modificado1grafica.png}
+ % ant.jpg: 320x276 px, 72dpi, 11.29x9.74 cm, bb=0 0 320 276
+ \caption{Gráfica de la colonia anterior}
+ \label{fig:modificado1grafica}
+\end{center}
+\end{figure}
+%---------------------------
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=7cm]{img/modificado2.png}
+ % ant.jpg: 320x276 px, 72dpi, 11.29x9.74 cm, bb=0 0 320 276
+ \caption{Probabilidad de 70, 20, 10}
+ \label{fig:modificado2}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=7cm]{img/modificado2grafica.png}
+ % ant.jpg: 320x276 px, 72dpi, 11.29x9.74 cm, bb=0 0 320 276
+ \caption{Gráfica de la colonia anterior}
+ \label{fig:modificado2grafica}
+\end{center}
+\end{figure}
+
+%------------------------------------
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=7cm]{img/modificado3.png}
+ % ant.jpg: 320x276 px, 72dpi, 11.29x9.74 cm, bb=0 0 320 276
+ \caption{Probabilidad de 75, 25, 5}
+ \label{fig:modificado3}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=7cm]{img/modificado3grafica.png}
+ % ant.jpg: 320x276 px, 72dpi, 11.29x9.74 cm, bb=0 0 320 276
+ \caption{Gráfica de la colonia anterior}
+ \label{fig:modificado3grafica}
+\end{center}
+\end{figure}
+
+Es importante señalar que el porcentaje de hormigas reina no pude ser muy alto, por lo general no mayor a 10 porque entonces se dispara la cantidad de hormigas muy rápidamente debido a que empiezan a nacer más reinas y junto con las soldado aumentan sin control.
+
 \subsection{Conclusiones}
 La hormiga de Langton es otro de ejemplo de un autómata celular bastante interesante, los comportamientos que se generan en este son bastante peculiares y complejos ya que estos tratan de describir toda una colonia. Respecto a la implementación no hubo muchos problemas, sin embargo, el rendimiento del programa no es tan bueno como se esperaba debido a que entre mayor sea el espacio a trabajar más lenta se vuelve la simulación.
 

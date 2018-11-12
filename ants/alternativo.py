@@ -18,7 +18,7 @@ class Ventana(Frame):
         self.barra_reina = None
         self.label_probabilidades = None
 
-        self.tiempo_vida = 50
+        self.tiempo_vida = 100
         self.cuadros = None
         self.matriz = None
         self.tam = 100
@@ -242,18 +242,21 @@ class Ventana(Frame):
             reinas = list()
             soldados = list()
             cont = 0
+            print("primer for")
             for hormiga in self.hormigas:
                 if hormiga.tipo == tipos_dict["reina"]:
                     reinas.append(cont)
                 elif hormiga.tipo == tipos_dict["soldado"]:
                     soldados.append(cont)
                 cont += 1
+            print("Segundo for")
             for i in reinas:
                 for j in soldados:
                     if self.hormigas[i].x == self.hormigas[j].x and self.hormigas[i].y == self.hormigas[j].y:
                             self.hormigas.append(self.crear_hormiga(self.hormigas[i].x, self.hormigas[i].y))
 
             conjunto = set()
+            print("Tercer for")
             for hormiga in self.hormigas:
                 if hormiga.vida == self.tiempo_vida:
                     self.contador[hormiga.tipo-1] -= 1

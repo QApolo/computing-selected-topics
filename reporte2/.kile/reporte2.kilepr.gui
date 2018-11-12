@@ -1,8 +1,35 @@
 [General]
-kile_livePreviewEnabled=true
-kile_livePreviewStatusUserSpecified=false
+kile_livePreviewEnabled=false
+kile_livePreviewStatusUserSpecified=true
 kile_livePreviewTool=LivePreview-PDFLaTeX
 lastDocument=main.tex
+
+[document-settings,item:arboles.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+
+[document-settings,item:gol2.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+
+[document-settings,item:langton.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
 
 [document-settings,item:main.tex]
 Bookmarks=
@@ -17,9 +44,17 @@ Mode Set By User=false
 open=false
 order=-1
 
+[item:gol.tex]
+open=false
+order=-1
+
 [item:gol2.tex]
 open=false
 order=-1
+
+[item:langton.tex]
+open=true
+order=1
 
 [item:main.tex]
 open=true
@@ -29,9 +64,30 @@ order=0
 open=false
 order=-1
 
-[view-settings,view=0,item:main.tex]
-CursorColumn=20
-CursorLine=17
+[view-settings,view=0,item:arboles.tex]
+CursorColumn=0
+CursorLine=0
 JumpList=
 TextFolding=[]
-ViMarks=.,46,12,[,46,12,],46,12
+ViMarks=
+
+[view-settings,view=0,item:gol2.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[view-settings,view=0,item:langton.tex]
+CursorColumn=64
+CursorLine=779
+JumpList=
+TextFolding=[{"endColumn":11,"endLine":13,"flags":2,"startColumn":0,"startLine":6},{"endColumn":16,"endLine":19,"flags":2,"startColumn":0,"startLine":16},{"endColumn":15,"endLine":151,"flags":2,"startColumn":0,"startLine":56},{"endColumn":15,"endLine":346,"flags":2,"startColumn":0,"startLine":156},{"endColumn":15,"endLine":646,"flags":2,"startColumn":0,"startLine":351},{"endColumn":15,"endLine":690,"flags":2,"startColumn":0,"startLine":651}]
+ViMarks=.,779,164,[,779,164,],779,174
+
+[view-settings,view=0,item:main.tex]
+CursorColumn=8
+CursorLine=44
+JumpList=
+TextFolding=[]
+ViMarks=.,47,0,[,47,0,],47,0
