@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proyecto final</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style type="text/css">
+        body {
+            margin:0px;
+        }
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-auto">
+                <canvas id="canvas" width="1000" height="1000"></canvas>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="size">Tamaño de la matriz:</label>
+                        </div>
+                        <div class="col">
+                            <input type="number" placeholder="Tamaño" id="size" class="form-control" value="100"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="b1">B1:</label>
+                        <input type="number" placeholder="B1" id="b1" class="form-control" value="2"/>
+                    </div>
+                    <div class="col">
+                        <label for="b2">B2:</label>
+                        <input type="number" placeholder="B2" id="b2" class="form-control" value="3"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="s1">S1:</label>
+                        <input type="number" placeholder="S1" id="s1" class="form-control" value="3" />
+                    </div>
+                    <div class="col">
+                        <label for="s2">S2:</label>
+                        <input type="number" placeholder="S2" id="s2" class="form-control" value="3"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="distribution">Distribución de unos:
+                        <span id="distribution_value">50</span>%</label>
+                    <input type="range" min="0" max="100" value="50" id="distribution">
+                </div>
+                <div class="form-group">
+                    <label for="input_function">Función a utilizar:</label>
+                    <select name="type_function" id="input_function">
+                        <option value="1">Moda</option>
+                        <option value="1">Promedio</option>
+                        <option value="1">Paridad</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="tau">Tau:</label>
+                        </div>
+                        <div class="col">
+                            <input type="number" placeholder="tau" id="tau" class="form-control" value="3"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="color_ones">Color de unos:</label>
+                    <input type="color" value="#000000"  id="color_ones">
+                </div>
+                <div class="form-group">
+                    <label for="color_zeros">Color de ceros:</label>
+                    <input type="color" value="#ffffff"  id="color_zeros">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <button id="btn_start" class="btn btn-primary btn-sm">
+                                Iniciar/Reiniciar
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button id="btn_pause" class="btn btn-secondary btn-sm">
+                                Reanudar/Pausa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button id="btn_next" class="btn btn-success btn-sm">
+                        Siguiente Iteración
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+            <p id="information" class="h4"></p>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="./logica.js"></script>
+</body>
+</html>
