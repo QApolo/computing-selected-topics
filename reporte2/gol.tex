@@ -1,6 +1,29 @@
-\section{Juego de la vida}
+\section{Autómata celular (Regla de life y difusión)}
+Los autómatas celulares(AC) surgen en la década de 1940 con John Von Neumann, que intentaba modelar una máquina que fuera capaz de auto-replicarse, llegando así a un modelo matemático de dicha maquina con reglas complicadas sobre una red rectangular. Inicialmente fueron interpretados como conjunto de células que crecían, se reproducían y morían a medida que pasaba el tiempo. A esta similitud con el crecimiento de las células se le debe su nombre.\cite{PAGINA}
+
+Un autómata celular se caracteriza por contar con los siguientes elementos:
+\begin{enumerate}
+ \item Arreglo regular. Ya sea un plano de dos dimensiones o un espacio n-dimensional, este es el espacio de evoluciones, y cada división homogénea del arreglo es llamada célula.
+ \item Conjunto de estados. Es finito y cada elemento o célula del arreglo toma un valor de este conjunto de estados. También se denomina alfabeto. Puede ser expresado en valores o colores.
+ \item configuración inicial. Consiste en asignar un estado a cada una de las células del espacio de evolución inicial del sistema.
+ \item Vecindades. Define el conjunto contiguo de células y posición relativa respecto a cada una de ellas. A cada vecindad diferente corresponde un elemento del conjunto de estados.
+ \item Función local. Es la regla de evolución que determina el comportamiento del A. C. Se conforma de una célula central y sus vecindades. Define como debe cambiar de estado cada célula dependiendo de los estados anteriores de sus vecindades. Puede ser una expresión algebraica o un grupo de ecuaciones.
+\end{enumerate}
+
 \subsection{Introducción}
-Este programa es la mejora del hecho en el primer parcial ya que en esta versión se agrega la opción de insertar mosaicos ya definidos y de poder cargar un archivo con una configuración inicial del juego de la vida. Otra funcionalidad que faltaba en la versión anterior y que se agrego en este programa es una barra para poder moverse a lo largo de toda la sección de simulación y así poder apreciar la simulación por completo.
+\subsection{Práctica a realizar}
+Este programa implementar la simulación de un autómata celular. Los puntos importantes a señalar son que cuenta con una interfaz gráfica para el usuario en la cual aparecen los unos (célula viva) y ceros (célula muerta) que son el principal elemento en este autómata celular y que son representados como pequeños cuadros que cambian su tamaño de acuerdo a la población que se tenga. Las características de este simulador son las siguientes:
+\begin{itemize}
+ \item Permitir seleccionar el tamaño de la población de la matriz de unos y ceros.
+ \item Permitir seleccionar la regla que se utilizara en cada iteración de la simulación.
+ \item Se podrá elegir la distribución de unos que habrá en la matriz.
+ \item Se podrá cambiar los colores de los ceros y los unos de la simulación.
+ \item Permitir guardar la matriz que se esta trabajando en un archivo de texto.
+ \item Se mostrara el cambio de unos que hay a lo largo de cada iteración.
+\end{itemize}
+El objetivo que se tiene es mostrar una matriz de hasta 1000 por 1000 para poder observar un comportamiento que nos proporcione información.
+
+Para el segundo parcial se realizo una mejora de este programa en esta versión se agrega la opción de insertar mosaicos ya definidos y de poder cargar un archivo con una configuración inicial del juego de la vida. Otra funcionalidad que faltaba en la versión anterior y que se agrego en este programa es una barra para poder moverse a lo largo de toda la sección de simulación y así poder apreciar la simulación por completo.
 
 Los patrones que se eligieron son los más comunes que se pueden encontrar con estas dos reglas y que generan nuevos patrones a lo largo de la simulación del programa. Los mosaicos que se agregaron son algunos que se generan con la regla de life y con la regla de difusión. Las siguientes figuras son las cinco que se pueden insertar en el simulador.
 
@@ -623,9 +646,371 @@ main()
 
 \end{lstlisting}
 
+Archivo: grafica.py
+En este archivo se encuentra el código que se encarga de graficar la historia de unos a lo largo de la animación, al igual que el archivo anterior se utilizo python 3, sin embargo en la graficación se realizo con la biblioteca matplotlib.
+\begin{lstlisting}[language=Python]
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+fig = plt.figure('Historial de unos')
+fig.suptitle("Historial de unos")
+ax1 = fig.add_subplot(1, 1, 1)
+def animacion(i):
+    info = open("grafica.txt", "r").read()
+    lineas = info.split("\n")
+    xs = []
+    ys = []
+
+    for linea in lineas:
+        if len(linea) > 1:
+            x,y = linea.split(",")
+            xs.append(int(x))
+            ys.append(int(y))
+    ax1.clear()
+    ax1.plot(xs, ys)
+
+ani = animation.FuncAnimation(fig, animacion, interval=1000)
+
+plt.show()
+\end{lstlisting}
+
 \subsection{Pruebas}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=13cm, height=6cm]{./img/gol.png}
+ \caption{Juego de la vida con la regla 2333}
+ \label{fig:gol}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=13cm, height=6cm]{./img/gol_celulas.png}
+ \caption{Juego de la vida con células seleccionadas por el usuario}
+ \label{fig:gol_celulas}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=13cm, height=6cm]{./img/gol_colores.png}
+ \caption{Juego de la vida cambiando los colores y la regla 7722}
+ \label{fig:gol_colores}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=8cm, height=13cm]{./img/matriz.png}
+ \caption{Matriz que se guarda}
+ \label{fig:matriz}
+\end{center}
+\end{figure}
+
+\subsubsection{Análisis de poblaciones}
+En esta parte se hicieron pruebas con la regla de life y difusión aumentando la densidad de la población de 10 en 10 por ciento hasta llegar al máximo de 90 por ciento debido que en un 100 por ciento no se aprecia nada al igual que en cero, las pruebas de realizaron tras 500 o 1000 generaciones en una matriz de 100 por 100.
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life10.png}
+ \caption{Regla de life con una probabilidad de unos de 10\%}
+ \label{fig:life10}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life10grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:life10grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life20.png}
+ \caption{Regla de life con una probabilidad de unos de 20\%}
+ \label{fig:life20}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life20grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:life20grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life30.png}
+ \caption{Regla de life con una probabilidad de unos de 30\%}
+ \label{fig:life30}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life30grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:life30grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life40.png}
+ \caption{Regla de life con una probabilidad de unos de 40\%}
+ \label{fig:life40}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life40grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:life40grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life50.png}
+ \caption{Regla de life con una probabilidad de unos de 50\%}
+ \label{fig:life50}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life50grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:life50grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life60.png}
+ \caption{Regla de life con una probabilidad de unos de 60\%}
+ \label{fig:life60}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life60grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:life60grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life70.png}
+ \caption{Regla de life con una probabilidad de unos de 70\%}
+ \label{fig:life70}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life70grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:life70grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life80.png}
+ \caption{Regla de life con una probabilidad de unos de 80\%}
+ \label{fig:life80}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life80grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:life80grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life80.png}
+ \caption{Regla de life con una probabilidad de unos de 90\%}
+ \label{fig:life90}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/life90grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:life90grafica}
+\end{center}
+\end{figure}
+
+\newpage
+En todas las simulaciones se encuentra un comportamiento similar en el cual la población inicial es muy alta y de manera brusca disminuye y apartir de ahi decrece de manera lenta.
+
+En la figura \ref{fig:life70} se aprecia asi que valor de densidad de la población tiende la regla de life, el valor es 0.0352, el resto de simulaciones tiende a un valor similar pero debido a que solo se trabajaron con 1000 generaciones no se logra apreciar por completo.
+
+\newpage
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion10.png}
+ \caption{Regla de difusión con una probabilidad de unos de 10\%}
+ \label{fig:diffusion10}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion10grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:diffusion10grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion20.png}
+ \caption{Regla de difusión con una probabilidad de unos de 20\%}
+ \label{fig:diffusion20}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion20grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:diffusion20grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion30.png}
+ \caption{Regla de difusión con una probabilidad de unos de 30\%}
+ \label{fig:diffusion30}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion30grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:diffusion30grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion40.png}
+ \caption{Regla de difusión con una probabilidad de unos de 40\%}
+ \label{fig:diffusion40}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion40grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:diffusion40grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion50.png}
+ \caption{Regla de difusión con una probabilidad de unos de 50\%}
+ \label{fig:diffusion50}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion50grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:diffusion50grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion60.png}
+ \caption{Regla de difusión con una probabilidad de unos de 60\%}
+ \label{fig:diffusion60}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion60grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:diffusion60grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion70.png}
+ \caption{Regla de difusión con una probabilidad de unos de 70\%}
+ \label{fig:diffusion70}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion70grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:diffusion70grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion80.png}
+ \caption{Regla de difusión con una probabilidad de unos de 80\%}
+ \label{fig:diffusion80}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion80grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:diffusion80grafica}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion80.png}
+ \caption{Regla de difusión con una probabilidad de unos de 90\%}
+ \label{fig:diffusion90}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=12cm, height=8cm]{./img/diffusion90grafica.png}
+ \caption{Comportamiento de la población de la simulación anterior}
+ \label{fig:diffusion90grafica}
+\end{center}
+\end{figure}
+
+Para la regla de difusión se podria decir que el comportamiento de la población es más estable que la de life debido a que en todas las simulaciones se llego a la densidad de población de 0.21 y el comportamiento de la gráfica es igual en todas las probabilidades de uno que se probaron en donde la población oscila entre un limite mayor y uno menor cerca de los 2000 individuos vivos lo cual es un comportamiento interesante.
+
 Las pruebas que se realizaron fueron insertar los mosaicos ya definidos y ver como se comportan con las reglas de vida y de difusión.
 
+\subsubsection{Insertar mosaicos}
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=12cm, height=8cm]{./img/inicio.png}
@@ -668,4 +1053,8 @@ Las pruebas que se realizaron fueron insertar los mosaicos ya definidos y ver co
 \end{figure}
 
 \subsection{Conclusiones}
-Los comportamientos que se generan al insertar distintos patrones en las dos reglas que tenemos resultan bastante interesante principalmente los gliders ya que estos son los que generan las figuras más complejas a partir de figuras tan simples y pequeñas y que con unas pocas generación crecen de una forma muy acelerada
+Al hacer y probar este programa se pudieron solucionar dos cuestiones, la primera es si existe una configuración el la cual el numero de células no se termine, y la respuesta a esto es que exista un oscilador el cual cambia su posición a lo largo del tiempo, otra posible opción es que haya figuras como un bloque formado por 4 cuadros en el cual no hay cambios.
+
+La siguiente cuestión es si existe una configuración en la cual la población crezca indefinidamente. Para lograr esto es indispensable tener un espacio que sea infinito en el cual se puedan propagar las células a través del tiempo, ya que si no se cuenta con esto en algún punto se tendrán tantos elementos vivos que empezaran a morir por sobre población.
+
+Respecto a los patrones, los comportamientos que se generan al insertar distintos patrones en las dos reglas que tenemos resultan bastante interesante principalmente los gliders ya que estos son los que generan las figuras más complejas a partir de figuras tan simples y pequeñas y que con unas pocas generación crecen de una forma muy acelerada

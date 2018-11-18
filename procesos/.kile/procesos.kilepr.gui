@@ -23,7 +23,7 @@ Mode=LaTeX
 Mode Set By User=false
 
 [item:main.tex]
-open=true
+open=false
 order=0
 
 [item:procesos.kilepr]
@@ -31,8 +31,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:main.tex]
-CursorColumn=0
-CursorLine=19
+CursorColumn=40
+CursorLine=5
 JumpList=
 TextFolding=[]
 ViMarks=.,4,45,[,4,7,],4,45

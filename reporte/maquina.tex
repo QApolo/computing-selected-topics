@@ -1,9 +1,40 @@
- 
-\section{Maquina de Turing}
+\section{Máquina de Turing}
 \subsection{Introducción}
-La elaboración de este programa consistió en elaborar un maquina de Turing capaz de duplicar la cantidad de unos en una cadena de unos, es decir, si la cadena que se ingresa es $ 11 $ entonces la cadena de salida sera $ 1111 $.
+La máquina de Turing, presentada por Alan Turing en 1936 en On computable numbers, with an application to the Entscheidungsproblems, es el modelo matemático de un dispositivo que se comporta como un autómata finito y que dispone de una cinta de longitud infinita en la que se pueden leer, escribir o borrar símbolos. Existen otras versiones con varias cintas, deterministas o no, etc., pero todas son equivalentes (respecto a los lenguajes que aceptan).
 
-Es por esto que la maquina sólo aceptara unos en la entrada mientras que los símbolos de la cinta incluirán a la X y la Y. De esta forma la maquina de Turing para este problema se define como:
+Uno de los teoremas más importantes sobre las máquinas de Turing es que pueden simular el comportamiento de una computadora (almacenamiento y unidad de control). Por ello, si un problema no puede ser resuelto por una de estas máquinas, entonces tampoco puede ser resuelto por una computadora (problema indecidible, NP) \cite{LIBRO}.
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=10cm, height=3cm]{./img/maquina.png}
+ \caption{Una máquina de Turing}
+ \label{fig:diagrama}
+\end{center}
+\end{figure}
+
+De manera formal la máquina de Turing se define de la siguiente manera:
+
+\[ M=(Q, \Sigma, \Gamma, \delta, q_0, B, F) \]
+donde:
+\begin{description}
+ \item $Q$ es el conjunto finito de estados de la unidad de control.
+ \item $ \Sigma $ es el conjunto finito de símbolos de entrada
+ \item $ \Gamma $ es el conjunto completo de símbolos de cinta; $ \Sigma $ siempre es un subconjunto de $\Gamma$
+ \item $\delta$ Es la función de transición. Los argumentos de $\delta(q, X)$ son un estado $q$ y un símbolo de cinta $X$. El valor de $\delta(q, X)$, si está definido, es $(p, Y, D)$ donde:
+ \begin{enumerate}
+  \item $p$ es el siguiente estado de $Q$
+  \item $Y$ es el símbolo de $\Gamma$, que se escribe en la casilla que señala la cabeza y que sustituye a cualquier símbolo que se encontrara en ella.
+  \item $D$ es una dirección y puede ser $L$ o $ R$, lo que nos indica la dirección en que la cabeza se mueve, `izquierda` (L) o `derecha` (R), respectivamente
+ \end{enumerate}
+ \item $q_0$ es el estado inicial, un elemento de $Q$, en el que inicialmente se encuentra la unidad de control.
+ \item $B$ es el símbolo espacio en blanco. Este símbolo pertenece a $Gamma$ pero no a $Sigma$; es decir, no es un símbolo de entrada.
+ \item $F$ es el conjunto de los estados finales, un subconjunto de $Q$
+\end{description}
+
+\subsection{Planteamiento de la práctica}
+La elaboración de este programa consistió en elaborar un máquina de Turing capaz de duplicar la cantidad de unos en una cadena de unos, es decir, si la cadena que se ingresa es $ 11 $ entonces la cadena de salida sera $ 1111 $.
+
+Es por esto que la máquina sólo aceptara unos en la entrada mientras que los símbolos de la cinta incluirán a la X y la Y. De esta forma la máquina de Turing para este problema se define como \cite{LIBRO}:
 
 \[M=(\lbrace q_{0}, q_{1}, q_{2}, q_{3}\rbrace, \lbrace 1 \rbrace, \lbrace 1, X, Y, B \rbrace, \delta, q_{0}, B, \lbrace q_{4} \rbrace)\]
 
@@ -20,23 +51,23 @@ Estado & 1 & X & Y & B\\ \hline
 \end{tabular}
 \end{center}
 
-EL funcionamiento de esta maquina se puede entender mejor con el diagrama de la figura \ref{fig:diagrama}
+EL funcionamiento de esta máquina se puede entender mejor con el diagrama de la figura \ref{fig:diagrama}
 
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=12cm, height=7cm]{./img/Turing-unos.png}
- \caption{Representación gráfica de las transiciones de la maquina de Turing}
+ \caption{Representación gráfica de las transiciones de la máquina de Turing}
  \label{fig:diagrama}
 \end{center}
 \end{figure}
 
-El funcionamiento del programa empieza cuando se inserta una cadena de unos y la maquina empezara a trabajar, además de generar una cadena final se muestra una animación del como se están realizando las transiciones en la cinta de la maquina, por otro lado se imprime en consola el historial de movimientos que se hacen, este historial también se guarda en un archivo de texto.
+El funcionamiento del programa empieza cuando se inserta una cadena de unos y la máquina empezara a trabajar, además de generar una cadena final se muestra una animación del como se están realizando las transiciones en la cinta de la máquina, por otro lado se imprime en consola el historial de movimientos que se hacen, este historial también se guarda en un archivo de texto.
 
 \subsection{Desarrollo}
 El código de este programa fue realizado en Python 3.7 y se utilizo la biblioteca tkinter para la parte gráfica.
 
 Archivo: turing.py
-Esta clase es la que modela la maquina de Turing, los parámetros importantes son: el estado inicial, los estados finales, la cadena de entrada y la función de transición.
+Esta clase es la que modela la máquina de Turing, los parámetros importantes son: el estado inicial, los estados finales, la cadena de entrada y la función de transición.
 \begin{lstlisting}[language=Python]
 class MaquinaTuring:
     """MaquinaTuring"""
@@ -187,7 +218,7 @@ El siguiente ejemplo es la cadena con un solo uno.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=13cm, height=6cm]{./img/uno_grafica.png}
- \caption{Representación gráfica de las transiciones de la maquina de Turing}
+ \caption{Representación gráfica de las transiciones de la máquina de Turing}
  \label{fig:uno_grafica}
 \end{center}
 \end{figure}
@@ -220,10 +251,10 @@ En este ejemplo se inserta una cadena con dos unos.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=13cm, height=6cm]{./img/dos_grafica.png}
- \caption{Representación gráfica de las transiciones de la maquina de Turing}
+ \caption{Representación gráfica de las transiciones de la máquina de Turing}
  \label{fig:dos_grafica}
 \end{center}
 \end{figure}
 
 \subsection{Conclusiones}
-El hacer este programa probó lo útil y poderosa que es la maquina de Turing en la solución de problemas, ya que como es evidente si un problema no se puede solucionar usando una maquina de Turing entonces es no computable y a pesar que este problema de duplicar una cadena no es difícil el implementar una maquina de Turing resulta en una solución bastante practica y fácil de implementar.
+El hacer este programa probó lo útil y poderosa que es la máquina de Turing en la solución de problemas, ya que como es evidente si un problema no se puede solucionar usando una máquina de Turing entonces es no computable y a pesar que este problema de duplicar una cadena no es difícil el implementar una máquina de Turing resulta en una solución bastante practica y fácil de implementar.

@@ -1,16 +1,161 @@
-Cadena: 1111}
+Cadena: 1111
 Estado actual: q0, apuntador: 1
 Siguiente estado: q1
 ********************
-Cadena: X111}
+Cadena: X111
 Estado actual: q1, apuntador: 2
 Siguiente estado: q1
 ********************
-Cadena: X111}
+Cadena: X111
 Estado actual: q1, apuntador: 3
 Siguiente estado: q1
 ********************
-Cadena: X111}
+Cadena: X111
 Estado actual: q1, apuntador: 4
 Siguiente estado: q1
 ********************
+Cadena: X111
+Estado actual: q1, apuntador: 5
+Siguiente estado: q2
+********************
+Cadena: X111Y
+Estado actual: q2, apuntador: 4
+Siguiente estado: q2
+********************
+Cadena: X111Y
+Estado actual: q2, apuntador: 3
+Siguiente estado: q2
+********************
+Cadena: X111Y
+Estado actual: q2, apuntador: 2
+Siguiente estado: q2
+********************
+Cadena: X111Y
+Estado actual: q2, apuntador: 1
+Siguiente estado: q0
+********************
+Cadena: 1111Y
+Estado actual: q0, apuntador: 2
+Siguiente estado: q1
+********************
+Cadena: 1X11Y
+Estado actual: q1, apuntador: 3
+Siguiente estado: q1
+********************
+Cadena: 1X11Y
+Estado actual: q1, apuntador: 4
+Siguiente estado: q1
+********************
+Cadena: 1X11Y
+Estado actual: q1, apuntador: 5
+Siguiente estado: q1
+********************
+Cadena: 1X11Y
+Estado actual: q1, apuntador: 6
+Siguiente estado: q2
+********************
+Cadena: 1X11YY
+Estado actual: q2, apuntador: 5
+Siguiente estado: q2
+********************
+Cadena: 1X11YY
+Estado actual: q2, apuntador: 4
+Siguiente estado: q2
+********************
+Cadena: 1X11YY
+Estado actual: q2, apuntador: 3
+Siguiente estado: q2
+********************
+Cadena: 1X11YY
+Estado actual: q2, apuntador: 2
+Siguiente estado: q0
+********************
+Cadena: 1111YY
+Estado actual: q0, apuntador: 3
+Siguiente estado: q1
+********************
+Cadena: 11X1YY
+Estado actual: q1, apuntador: 4
+Siguiente estado: q1
+********************
+Cadena: 11X1YY
+Estado actual: q1, apuntador: 5
+Siguiente estado: q1
+********************
+Cadena: 11X1YY
+Estado actual: q1, apuntador: 6
+Siguiente estado: q1
+********************
+Cadena: 11X1YY
+Estado actual: q1, apuntador: 7
+Siguiente estado: q2
+********************
+Cadena: 11X1YYY
+Estado actual: q2, apuntador: 6
+Siguiente estado: q2
+********************
+Cadena: 11X1YYY
+Estado actual: q2, apuntador: 5
+Siguiente estado: q2
+********************
+Cadena: 11X1YYY
+Estado actual: q2, apuntador: 4
+Siguiente estado: q2
+********************
+Cadena: 11X1YYY
+Estado actual: q2, apuntador: 3
+Siguiente estado: q0
+********************
+Cadena: 1111YYY
+Estado actual: q0, apuntador: 4
+Siguiente estado: q1
+********************
+Cadena: 111XYYY
+Estado actual: q1, apuntador: 5
+Siguiente estado: q1
+********************
+Cadena: 111XYYY
+Estado actual: q1, apuntador: 6
+Siguiente estado: q1
+********************
+Cadena: 111XYYY
+Estado actual: q1, apuntador: 7
+Siguiente estado: q1
+********************
+Cadena: 111XYYY
+Estado actual: q1, apuntador: 8
+Siguiente estado: q2
+********************
+Cadena: 111XYYYY
+Estado actual: q2, apuntador: 7
+Siguiente estado: q2
+********************
+Cadena: 111XYYYY
+Estado actual: q2, apuntador: 6
+Siguiente estado: q2
+********************
+Cadena: 111XYYYY
+Estado actual: q2, apuntador: 5
+Siguiente estado: q2
+********************
+Cadena: 111XYYYY
+Estado actual: q2, apuntador: 4
+Siguiente estado: q0
+********************
+Cadena: 1111YYYY
+Estado actual: q0, apuntador: 5
+Siguiente estado: q3
+********************
+Cadena: 11111YYY
+Estado actual: q3, apuntador: 6
+Siguiente estado: q3
+********************
+Cadena: 111111YY
+Estado actual: q3, apuntador: 7
+Siguiente estado: q3
+********************
+Cadena: 1111111Y
+Estado actual: q3, apuntador: 8
+Siguiente estado: q3
+********************
+Cadena final: 11111111
