@@ -1,4 +1,5 @@
 /*
+<<<<<<< HEAD
 * Guardar N matrices
 * Aplicar la funcion y sacar una matriz auxiliar
 * Aplicar regla original y esa es tu siguiente
@@ -181,7 +182,6 @@ function init() {
         }
     }
 }
-
 
 function plot() {
     suma += counter;
