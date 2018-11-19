@@ -12,11 +12,13 @@ let TYPE_FUNCTION_DICT = {
     "PARIDAD": 3
 };
 let c = document.getElementById("canvas");
+let c_aux = document.getElementById("canvas-aux");
 let information_output = document.getElementById("information");
 let slider_distribution = document.getElementById("distribution");
 let slider_output = document.getElementById("distribution_value");
 let context = document.getElementById("myChart");
 let ctx = c.getContext("2d");
+let ctx_aux = c_aux.getContext("2d");
 let size = 100;
 let total_population = size*size;
 let dimension = 10;
@@ -35,6 +37,7 @@ let colors = ["#FFFFFF", "#000000"];
 let type_function = TYPE_FUNCTION_DICT["MODA"];
 let myLineChart = create_chart(context);
 let matrices;
+let is_auxiliar_showed = false;
 
 ctx.lineWidth = "0.1";
 slider_output.innerHTML = slider_distribution.value;
@@ -89,6 +92,18 @@ function draw_matrix(size, dimension, matrix) {
             ctx.fillRect(dimension*j, dimension*i, dimension, dimension);
         }
     ctx.stroke();
+}
+
+function draw_aux_matrix(size, dimension, matrix) {
+    for (let i = 0; i < size; i++)
+        for (let j = 0; j < size; j++){
+            if (matrix[i][j] == 1)
+                ctx_aux.fillStyle = colors[1];
+            else
+                ctx_aux.fillStyle = colors[0];
+            ctx_aux.fillRect(dimension*j, dimension*i, dimension, dimension);
+        }
+    ctx_aux.stroke();
 }
 
 function draw_grid(size, dimension) {
@@ -259,18 +274,6 @@ function get_check_matrix() {
     return document.getElementById("check-matrix").checked;
 }
 
-document.getElementById("btn_start").addEventListener("click", function click(e) {
-    e.preventDefault();
-    init();
-    plot();
-    draw_grid(size, dimension);
-    draw_matrix(size, dimension, original);
-});
-
-document.getElementById("check-matrix").addEventListener("click", function click(e) {
-    is_active = get_check_matrix();
-});
-
 let contador = 1;
 function another_iteration() {
      if (is_active) {
@@ -311,10 +314,30 @@ function another_iteration() {
                     }
                 }
             }
+            if (is_auxiliar_showed)
+                draw_aux_matrix(size, dimension, auxiliar);
         }
     }
     iterate();
 }
+
+document.getElementById("btn_start").addEventListener("click", function click(e) {
+    e.preventDefault();
+    init();
+    plot();
+    draw_grid(size, dimension);
+    draw_matrix(size, dimension, original);
+});
+
+document.getElementById("check-matrix").addEventListener("click", function click(e) {
+    is_active = get_check_matrix();
+});
+
+document.getElementById("btn_show_matrix").addEventListener("click", function click(e) {
+    is_auxiliar_showed = !is_auxiliar_showed;
+    if (!is_auxiliar_showed)
+        ctx_aux.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+});
 
 document.getElementById("btn_next").addEventListener("click", function click(e) {
     e.preventDefault();
