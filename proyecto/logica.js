@@ -1,5 +1,4 @@
 /*
-<<<<<<< HEAD
 * Guardar N matrices
 * Aplicar la funcion y sacar una matriz auxiliar
 * Aplicar regla original y esa es tu siguiente
@@ -127,13 +126,15 @@ function next_population(size, matrix, aux) {
             if (aux[i][j] == 1) {
                 if (vecinos < rule[0] || vecinos > rule[1]){
                     matrix[i][j] = 0;
-                    aux_counter--;
+                    //aux_counter--;
                 }
             } 
             else if (rule[2] <= vecinos && vecinos <= rule[3]) {
                 matrix[i][j] = 1;
-                aux_counter++;
+                //aux_counter++;
             }
+            if (matrix[i][j] == 1)
+                aux_counter++;
         }
 
     return aux_counter;
@@ -163,7 +164,8 @@ function init() {
     colors = get_colors();
     type_function = get_type_function();
     myLineChart = create_chart(context);
-    matrices = {1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[]}
+    is_active = get_check_matrix();
+    matrices = {1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[]};
 
     while (dimension*size < CANVAS_SIZE) dimension++;
 
@@ -197,7 +199,7 @@ function plot() {
 
 function iterate() {
     my_time++;
-    counter += next_population(size, original, auxiliar);
+    counter = next_population(size, original, auxiliar);
     copy_matrix(original, auxiliar);
     draw_matrix(size, dimension, original);
     plot();
@@ -253,17 +255,25 @@ function apply_moda(temporal) {
     else return 0
 }
 
+function get_check_matrix() {
+    return document.getElementById("check-matrix").checked;
+}
+
 document.getElementById("btn_start").addEventListener("click", function click(e) {
     e.preventDefault();
     init();
     plot();
     draw_grid(size, dimension);
     draw_matrix(size, dimension, original);
-})
+});
+
+document.getElementById("check-matrix").addEventListener("click", function click(e) {
+    is_active = get_check_matrix();
+});
+
 let contador = 1;
-document.getElementById("btn_next").addEventListener("click", function click(e) {
-    // COPIAR MATRIZ
-    if (is_active) {
+function another_iteration() {
+     if (is_active) {
         if (contador == 1)
             copy_matrix(original, matrices[1]);
         else if (contador == 2)
@@ -285,31 +295,39 @@ document.getElementById("btn_next").addEventListener("click", function click(e) 
         if (contador > tau)
             contador = 1;
     }
-    //iterate();
+    let aux_res = 0;
     if (is_active) {
         if (((my_time+1) % tau) == 0 && my_time > 0) {
             console.log("APLICANDO");
-            debugger;
-            for (let i = 0; i < size; i++)
-                for (let j = 0; j < size; j++)
+            for (let i = 0; i < size; i++){
+                for (let j = 0; j < size; j++){
+                    let arreglo = [];
+                    for (let k = 1; k <= tau; k++)
+                        arreglo.push(matrices[k][i][j])
                     if (type_function == TYPE_FUNCTION_DICT["MODA"]) {
-                        let arreglo = [];
-                        for (let k = 1; k <= tau; k++)
-                            arreglo.push(matrices[k][i][j])
                         auxiliar[i][j] = apply_moda(arreglo);
+                    } else if (type_function == TYPE_FUNCTION_DICT["PARIDAD"]) {
+                        auxiliar[i][j] = apply_paridad(arreglo);
                     }
-            debugger;
+                }
+            }
         }
     }
     iterate();
+}
+
+document.getElementById("btn_next").addEventListener("click", function click(e) {
+    e.preventDefault();
+    another_iteration();
 });
 
 document.getElementById("btn_pause").addEventListener("click", function click(e) {
+    e.preventDefault();
     console.log("PAUSE");
     is_runinng = !is_runinng;
     if (is_runinng)
-        interval = setInterval(iterate, 250); // Aqui se hace lo del proyecto
-    else{
+        interval = setInterval(another_iteration, 250); // Aqui se hace lo del proyecto
+    else {
         clearInterval(interval);
         interval = null;
     }
