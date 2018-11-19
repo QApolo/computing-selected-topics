@@ -355,3 +355,20 @@ document.getElementById("btn_pause").addEventListener("click", function click(e)
         interval = null;
     }
 });
+
+c.addEventListener("click", function click(e) {
+    let my_y = e.pageY;
+    let my_x = e.pageX - 15;
+    let i = Math.floor(my_y/dimension);
+    let j = Math.floor(my_x/dimension);
+    if (original[i][j] == 1){
+        original[i][j] = 0;
+        auxiliar[i][j] = 0;
+        ctx.fillStyle = colors[0];
+    } else{
+        original[i][j] = 1
+        auxiliar[i][j] = 1;
+        ctx.fillStyle = colors[1];
+    }
+    ctx.fillRect(dimension*j, dimension*i, dimension, dimension);
+});
