@@ -637,18 +637,18 @@ c.addEventListener("click", function click(e) {
 \end{lstlisting}
 
 \subsection{Pruebas}
-Para probar el funcionamiento del programa se utilizaron diferentes reglas con diferentes densidades de población para poder observar su comportamiento. Es importante señalar que todas las pruebas se hicieron con un $\tau=4$ y con diferentes funciones $\Phi$.
+Para probar el funcionamiento del programa se utilizaron diferentes reglas con diferentes densidades de población para poder observar su comportamiento. Es importante señalar que todas las pruebas se hicieron con un $\tau=4$ y con diferentes funciones $\Phi$ además de solo iterar al rededor de 100 veces.
 
 \subsection{Regla: 2 7 4 6. Densidad: 20\%}
-
+Como se puede observar en la figura \ref{fig:2746} esta regla termina por llenar la mitad del espacio con una malla de unos y ceros.
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=15cm, height=8cm]{./img/2746.png}
+ \includegraphics[width=15cm, height=7cm]{./img/2746.png}
  \caption{Resultado tras 100 iteraciones sin matriz auxiliar}
  \label{fig:2746}
 \end{center}
 \end{figure}
-
+Al aplicar la función de máximo no se llena todo el espacio y se estanca en una cantidad de unos.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/2746-max.png}
@@ -656,15 +656,15 @@ Para probar el funcionamiento del programa se utilizaron diferentes reglas con d
  \label{fig:2746-max}
 \end{center}
 \end{figure}
-
+Es importante mencionar que el resultado obtenido al aplicar la función mínimo es muy similar al de máximo pero la matriz auxiliar se invierte.
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=15cm, height=8cm]{./img/2746-max-aux.png}
+ \includegraphics[width=15cm, height=7cm]{./img/2746-max-aux.png}
  \caption{Matriz auxiliar del autómata anterior}
  \label{fig:2746-max-aux}
 \end{center}
 \end{figure}
-
+La figura \ref{fig:2746-paridad} es el resultado de utilizar la función de paridad en la cual la población decrece bastante rápido hasta quedarse en un solo patrón.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/2746-paridad.png}
@@ -672,7 +672,7 @@ Para probar el funcionamiento del programa se utilizaron diferentes reglas con d
  \label{fig:2746-paridad}
 \end{center}
 \end{figure}
-
+El comportamiento del automata anterior se puede ver reflejado en la matriz auxiliar que se muestra en la figura \ref{fig:2746-paridad-aux}.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/2746-paridad-aux.png}
@@ -682,7 +682,7 @@ Para probar el funcionamiento del programa se utilizaron diferentes reglas con d
 \end{figure}
 
 \subsection{Regla: 3 6 3 4. Densidad: 20\%}
-
+El comportamiento de esta regla es similar al anterior pero con una curva de crecimiento más suave.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/3634.png}
@@ -690,7 +690,7 @@ Para probar el funcionamiento del programa se utilizaron diferentes reglas con d
  \label{fig:3634}
 \end{center}
 \end{figure}
-
+Al utilizar la función de mínimo que se observa en la figura \ref{fig:3634-min} se llega al mismo resultado pero con algunas perturbaciones al inicio de su crecimiento.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/3634-min.png}
@@ -699,6 +699,8 @@ Para probar el funcionamiento del programa se utilizaron diferentes reglas con d
 \end{center}
 \end{figure}
 
+Si se utiliza una función de máximo se obtiene un resultado similar pero invirtiendo los colores de la matriz auxiliar que se observa en la figura \ref{fig:3634-min-aux}.
+
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/3634-min-aux.png}
@@ -706,7 +708,7 @@ Para probar el funcionamiento del programa se utilizaron diferentes reglas con d
  \label{fig:3634-min-aux}
 \end{center}
 \end{figure}
-
+La función de paridad es la que provoca el comportamiento más inestable ya que a pesar de que crece como en los ejemplos anteriores su población oscila a lo largo de un rango de valores 
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/3634-paridad.png}
@@ -714,7 +716,7 @@ Para probar el funcionamiento del programa se utilizaron diferentes reglas con d
  \label{fig:3634-paridad}
 \end{center}
 \end{figure}
-
+El comportamiento oscilatorio se observa en la matriz auxiliar ya que esta parece solo cambiar de colores una y otra vez.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/3634-paridad-aux.png}
