@@ -1,6 +1,6 @@
 % !TeX spellcheck = es_ES
-\documentclass[a4paper,12pt]{article}
-\usepackage[utf8]{inputenc}
+\documentclass[12pt, titlepage]{article}
+\usepackage[letterpaper, margin=3cm]{geometry}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{listings}
@@ -12,7 +12,6 @@
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
- 
  
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
@@ -640,12 +639,321 @@ c.addEventListener("click", function click(e) {
 \subsection{Pruebas}
 Para probar el funcionamiento del programa se utilizaron diferentes reglas con diferentes densidades de población para poder observar su comportamiento. Es importante señalar que todas las pruebas se hicieron con un $\tau=4$ y con diferentes funciones $\Phi$.
 
-\subsection{Regla: 2 7 4 6. Densidad: 20\%} 
+\subsection{Regla: 2 7 4 6. Densidad: 20\%}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2746.png}
+ \caption{Resultado tras 100 iteraciones sin matriz auxiliar}
+ \label{fig:2746}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2746-max.png}
+ \caption{Utilizando la función de máximo}
+ \label{fig:2746-max}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2746-max-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:2746-max-aux}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2746-paridad.png}
+ \caption{Utilizando la función de paridad}
+ \label{fig:2746-paridad}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2746-paridad-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:2746-paridad-aux}
+\end{center}
+\end{figure}
+
 \subsection{Regla: 3 6 3 4. Densidad: 20\%}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3634.png}
+ \caption{Resultado tras 100 iteraciones sin matriz auxiliar}
+ \label{fig:3634}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3634-min.png}
+ \caption{Utilizando la función de mínimo}
+ \label{fig:3634-min}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3634-min-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:3634-min-aux}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3634-paridad.png}
+ \caption{Utilizando la función de paridad}
+ \label{fig:3634-paridad}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3634-paridad-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:3634-paridad-aux}
+\end{center}
+\end{figure}
+
 \subsection{Regla: 1 6 1 6. Densidad: 10\%}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/1616.png}
+ \caption{Resultado tras 100 iteraciones sin matriz auxiliar}
+ \label{fig:1616}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/1616-min.png}
+ \caption{Utilizando la función de mínimo}
+ \label{fig:1616-min}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/1616-min-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:1616-min-aux}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/1616-max.png}
+ \caption{Utilizando la función de máximo}
+ \label{fig:1616-max}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/1616-max-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:1616-max-aux}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/1616-paridad.png}
+ \caption{Utilizando la función de paridad}
+ \label{fig:1616-paridad}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/1616-paridad-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:1616-paridad-aux}
+\end{center}
+\end{figure}
+
 \subsection{Regla: 3 3 1 8. Densidad: 10\%}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3318.png}
+ \caption{Resultado tras 100 iteraciones sin matriz auxiliar}
+ \label{fig:3318}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3318-min.png}
+ \caption{Utilizando la función de mínimo}
+ \label{fig:3318-min}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3318-min-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:3318-min-aux}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3318-max.png}
+ \caption{Utilizando la función de máximo}
+ \label{fig:3318-max}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3318-max-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:3318-max-aux}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3318-paridad.png}
+ \caption{Utilizando la función de paridad}
+ \label{fig:3318-paridad}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3318-paridad-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:3318-paridad-aux}
+\end{center}
+\end{figure}
+
 \subsection{Regla: 3 3 1 7. Densidad: 5\%}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3317.png}
+ \caption{Resultado tras 100 iteraciones sin matriz auxiliar}
+ \label{fig:3317}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3317-min.png}
+ \caption{Utilizando la función de mínimo}
+ \label{fig:3317-min}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3317-min-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:3317-min-aux}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3317-max.png}
+ \caption{Utilizando la función de máximo}
+ \label{fig:3317-max}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3317-max-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:3317-max-aux}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3317-paridad.png}
+ \caption{Utilizando la función de paridad}
+ \label{fig:3317-paridad}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/3317-paridad-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:3317-paridad-aux}
+\end{center}
+\end{figure}
+
 \subsection{Regla: 2 3 3 6. Densidad: 10\%}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2336.png}
+ \caption{Resultado tras 100 iteraciones sin matriz auxiliar}
+ \label{fig:2336}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2336-min.png}
+ \caption{Utilizando la función de mínimo}
+ \label{fig:2336-min}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2336-min-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:2336-min-aux}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2336-max.png}
+ \caption{Utilizando la función de máximo}
+ \label{fig:2336-max}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2336-max-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:2336-max-aux}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2336-paridad.png}
+ \caption{Utilizando la función de paridad}
+ \label{fig:2336-paridad}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=15cm, height=8cm]{./img/2336-paridad-aux.png}
+ \caption{Matriz auxiliar del autómata anterior}
+ \label{fig:2336-paridad-aux}
+\end{center}
+\end{figure}
 
 \subsection{Conclusiones}
 El uso de una función y una matriz auxiliar para el calculo de las iteraciones en un autómata celular cambian el comportamiento de la función original, es decir, si se realiza la prueba y se compara la gráfica de unos de la regla del juego de la vida con y sin función auxiliar se puede apreciar que la que tiene la función auxiliar oscila con más frecuencia a diferencia de la que no utiliza una función extra, en esta la gráfica se estabiliza de una forma más rápida.
