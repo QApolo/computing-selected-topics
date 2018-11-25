@@ -79,8 +79,8 @@
                     </div>
                     <div class="col">
                         <select name="type_function" id="input_function" class="form-control">
-                            <option value="1">Moda</option>
-                            <option value="2">Promedio</option>
+                            <option value="1">Máximo</option>
+                            <option value="2">Mínimo</option>
                             <option value="3">Paridad</option>
                         </select>
                     </div>
@@ -144,7 +144,9 @@
             </div>
         </div>
         <div class="row">
-            <canvas id="canvas-aux" width="1000" height="1000"></canvas>
+            <div class="col-8 custom-scroll">
+                <canvas id="canvas-aux" width="1000" height="1000"></canvas>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="./Chart.bundle.min.js"></script>

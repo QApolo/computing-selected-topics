@@ -1,14 +1,15 @@
 /*
-* Guardar N matrices
-* Aplicar la funcion y sacar una matriz auxiliar
-* Aplicar regla original y esa es tu siguiente
-* Click
-* Todo cambie de color
+* 2 7 4 6 20% 
+* 3 6 3 4 20% 
+* 1 6 1 6 10% 
+* 3 3 1 8 10% 
+* 3 3 1 7 5% 
+* 23 3 6 10%
 */
 let CANVAS_SIZE = 1000;
 let TYPE_FUNCTION_DICT = {
     "MODA": 1,
-    "PROMEDIO": 2,
+    "MINIMO": 2,
     "PARIDAD": 3
 };
 let c = document.getElementById("canvas");
@@ -270,6 +271,13 @@ function apply_moda(temporal) {
     else return 0
 }
 
+function apply_minimo(temporal) {
+    if (apply_moda(temporal) == 0)
+        return 1;
+    else
+        return 0;
+}
+
 function get_check_matrix() {
     return document.getElementById("check-matrix").checked;
 }
@@ -307,11 +315,12 @@ function another_iteration() {
                     let arreglo = [];
                     for (let k = 1; k <= tau; k++)
                         arreglo.push(matrices[k][i][j])
-                    if (type_function == TYPE_FUNCTION_DICT["MODA"]) {
+                    if (type_function == TYPE_FUNCTION_DICT["MODA"])
                         auxiliar[i][j] = apply_moda(arreglo);
-                    } else if (type_function == TYPE_FUNCTION_DICT["PARIDAD"]) {
+                    else if (type_function == TYPE_FUNCTION_DICT["PARIDAD"])
                         auxiliar[i][j] = apply_paridad(arreglo);
-                    }
+                    else
+                        auxiliar[i][j] = apply_minimo(arreglo);
                 }
             }
             if (is_auxiliar_showed)
