@@ -42,8 +42,8 @@ TextFolding=[]
 ViMarks=
 
 [view-settings,view=0,item:reporte.tex]
-CursorColumn=43
-CursorLine=644
+CursorColumn=144
+CursorLine=961
 JumpList=
-TextFolding=[{"endColumn":14,"endLine":60,"flags":2,"startColumn":0,"startLine":54},{"endColumn":12,"endLine":71,"flags":2,"startColumn":0,"startLine":64},{"endColumn":14,"endLine":81,"flags":2,"startColumn":0,"startLine":76},{"endColumn":15,"endLine":256,"flags":2,"startColumn":0,"startLine":90}]
-ViMarks=.,615,55,[,615,55,],615,55
+TextFolding=[{"endColumn":14,"endLine":59,"flags":2,"startColumn":0,"startLine":53},{"endColumn":12,"endLine":69,"flags":2,"startColumn":0,"startLine":63},{"endColumn":14,"endLine":79,"flags":2,"startColumn":0,"startLine":74},{"endColumn":15,"endLine":254,"flags":2,"startColumn":0,"startLine":88},{"endColumn":15,"endLine":636,"flags":2,"startColumn":0,"startLine":260},{"endColumn":11,"endLine":649,"flags":2,"startColumn":0,"startLine":643},{"endColumn":11,"endLine":657,"flags":2,"startColumn":0,"startLine":651},{"endColumn":11,"endLine":665,"flags":2,"startColumn":0,"startLine":659},{"endColumn":11,"endLine":673,"flags":2,"startColumn":0,"startLine":667},{"endColumn":11,"endLine":681,"flags":2,"startColumn":0,"startLine":675},{"endColumn":11,"endLine":725,"flags":2,"startColumn":0,"startLine":719},{"endColumn":11,"endLine":736,"flags":2,"startColumn":0,"startLine":730},{"endColumn":11,"endLine":744,"flags":2,"startColumn":0,"startLine":738},{"endColumn":11,"endLine":752,"flags":2,"startColumn":0,"startLine":746},{"endColumn":11,"endLine":760,"flags":2,"startColumn":0,"startLine":754},{"endColumn":11,"endLine":768,"flags":2,"startColumn":0,"startLine":762},{"endColumn":11,"endLine":776,"flags":2,"startColumn":0,"startLine":770},{"endColumn":11,"endLine":784,"flags":2,"startColumn":0,"startLine":778},{"endColumn":11,"endLine":843,"flags":2,"startColumn":0,"startLine":837},{"endColumn":11,"endLine":901,"flags":2,"startColumn":0,"startLine":895}]
+ViMarks=.,961,143,[,961,143,],961,143

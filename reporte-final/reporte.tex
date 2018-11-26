@@ -726,6 +726,7 @@ El comportamiento oscilatorio se observa en la matriz auxiliar ya que esta parec
 \end{figure}
 
 \subsection{Regla: 1 6 1 6. Densidad: 10\%}
+El comportamiento de esta regla se tiende a estabilizar bastante rápido y formar una estructura que ya no cambia.
 
 \begin{figure}[H]
 \begin{center}
@@ -782,9 +783,10 @@ El comportamiento oscilatorio se observa en la matriz auxiliar ya que esta parec
  \label{fig:1616-paridad-aux}
 \end{center}
 \end{figure}
+Con esta regla y utilizando las tres funciones se obtiene el mismo resultado, sin embargo, el comportamiento de la cantidad de unos es diferente. Para la función de máximo se tiene el comportamiento más oscilatorio, después le sigue la función de paridad y por ultimo la función de mínimo. 
 
 \subsection{Regla: 3 3 1 8. Densidad: 10\%}
-
+El comportamiento de esta regla oscila bastante y llega a un punto en el que parece que solo cambia los colores de las células.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/3318.png}
@@ -792,7 +794,7 @@ El comportamiento oscilatorio se observa en la matriz auxiliar ya que esta parec
  \label{fig:3318}
 \end{center}
 \end{figure}
-
+Para la regla de mínimo se tiene un comportamiento extraño en el cual en lugar de aumentar la población y estabilizarse ocurre lo contrario hasta quedar con solo algunos patrones en la matriz.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/3318-min.png}
@@ -808,7 +810,7 @@ El comportamiento oscilatorio se observa en la matriz auxiliar ya que esta parec
  \label{fig:3318-min-aux}
 \end{center}
 \end{figure}
-
+Al aplicar la función máximo se reduce la cantidad de oscilaciones que se tienen a lo largo de las iteraciones.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/3318-max.png}
@@ -824,7 +826,7 @@ El comportamiento oscilatorio se observa en la matriz auxiliar ya que esta parec
  \label{fig:3318-max-aux}
 \end{center}
 \end{figure}
-
+En contraste con la función máximo se tiene lo contrario, en esta las oscilaciones son mayores.
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=15cm, height=8cm]{./img/3318-paridad.png}
@@ -898,7 +900,7 @@ El comportamiento oscilatorio se observa en la matriz auxiliar ya que esta parec
  \label{fig:3317-paridad-aux}
 \end{center}
 \end{figure}
-
+Con esta regla se tiene el comportamiento más raro al aplicar la regla de mínimo ya que la población aumenta en un inicio pero al final termina disminuyendo demasiado y estancarse en unos patrones en especifico.
 \subsection{Regla: 2 3 3 6. Densidad: 10\%}
 
 \begin{figure}[H]
@@ -956,6 +958,8 @@ El comportamiento oscilatorio se observa en la matriz auxiliar ya que esta parec
  \label{fig:2336-paridad-aux}
 \end{center}
 \end{figure}
+
+Al igual que con la regla anterior, en esta regla se tiene el mismo comportamiento de disminución de la población al aplicar la regla de mínimo.
 
 \subsection{Conclusiones}
 El uso de una función y una matriz auxiliar para el calculo de las iteraciones en un autómata celular cambian el comportamiento de la función original, es decir, si se realiza la prueba y se compara la gráfica de unos de la regla del juego de la vida con y sin función auxiliar se puede apreciar que la que tiene la función auxiliar oscila con más frecuencia a diferencia de la que no utiliza una función extra, en esta la gráfica se estabiliza de una forma más rápida.
